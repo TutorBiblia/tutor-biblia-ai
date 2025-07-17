@@ -12,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/chat', async (req, res) => {
+  res.json({ reply: completion.choices[0].message.content });
+
   const { message } = req.body;
 
   const completion = await openai.chat.completions.create({
