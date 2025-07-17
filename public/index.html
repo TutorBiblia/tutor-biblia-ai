@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>TutorBiblia AI</title>
+  <meta charset="UTF-8" />
+  <title>Tutor Bíblico IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body>
-  <h1>Bienvenido a TutorBiblia AI</h1>
-  <p>Tu servidor está funcionando correctamente.</p>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 2rem;">
+  <h1>📖 Tutor Bíblico IA</h1>
+  <p>Haz tu pregunta sobre la Biblia o temas pastorales:</p>
+
+  <textarea id="input" rows="4" style="width:100%; padding: 0.5rem;"></textarea>
+  <br/><br/>
+  <button onclick="enviarMensaje()" style="padding: 0.5rem 1rem;">Enviar</button>
+
+  <h3>Respuesta:</h3>
+  <div id="respuesta" style="white-space: pre-wrap; background: #f3f3f3; padding: 1rem; border-radius: 5px;"></div>
+
+  <script>
+    async function enviarMensaje() {
+      const mensaje = document.getElementById('input').value;
+      const respuestaDiv = document.getElementById('respuesta');
+      respuestaDiv.textContent = '⏳ Esperando respuesta...';
+
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: mensaje })
+        });
+
+        const data = await res.json();
+        respuestaDiv.textContent = data.reply;
+      } catch (error) {
+        respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
+        console.error(error);
+      }
+    }
+  </script>
 </body>
 </html>
