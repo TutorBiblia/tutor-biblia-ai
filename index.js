@@ -1,42 +1,42 @@
-import 'dotenv/config';
-import express from 'express';
-import OpenAI from 'openai';
-import cors from 'cors';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tutor Bíblico IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 2rem;">
+  <h1>📖 Tutor Bíblico IA</h1>
+  <p>Haz tu pregunta sobre la Biblia o temas pastorales:</p>
 
-const app = express();
-const port = process.env.PORT || 3000;
+  <textarea id="input" rows="4" style="width:100%; padding: 0.5rem;"></textarea>
+  <br/><br/>
+  <button onclick="enviarMensaje()" style="padding: 0.5rem 1rem;">Enviar</button>
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  <h3>Respuesta:</h3>
+  <div id="respuesta" style="white-space: pre-wrap; background: #f3f3f3; padding: 1rem; border-radius: 5px;"></div>
 
-app.use(cors());
-app.use(express.json());
+  <script>
+    async function enviarMensaje() {
+      const mensaje = document.getElementById('input').value;
+      const respuestaDiv = document.getElementById('respuesta');
+      respuestaDiv.textContent = '⏳ Esperando respuesta...';
 
-// ✅ Servir archivos estáticos desde la carpeta public
-app.use(express.static('public'));
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: mensaje })
+        });
 
-app.post('/chat', async (req, res) => {
-  const { message } = req.body;
+        const data = await res.json();
+        respuestaDiv.textContent = data.reply;
+      } catch (error) {
+        respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
 
-  try {
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        {
-          role: 'system',
-          content:
-            'Eres un tutor bíblico católico. Explica con claridad, cita la Biblia y aplica pastoralmente cada enseñanza. Responde con base bíblica precisa.'
-        },
-        { role: 'user', content: message }
-      ]
-    });
-
-    res.json({ reply: completion.choices[0].message.content });
-  } catch (error) {
-    console.error('Error al generar la respuesta:', error);
-    res.status(500).json({ error: 'Error al procesar la solicitud' });
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Servidor Tutor Bíblico IA activo en puerto ${port}`);
-});
