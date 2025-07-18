@@ -23,7 +23,7 @@
   <!-- Presentación de Tito -->
   <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
-      onclick="presentarseTito()"
+      onclick="presentarseTito()" ondblclick="titoBromea()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
     <p style="font-size: 1.2rem; font-weight: 500;">Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
   </div>
@@ -78,7 +78,7 @@
         const final = `${emoji} ${respuesta}`;
 
         respuestaDiv.textContent = final;
-        hablar(respuesta);  // Tito solo lee la parte sin emoji
+        hablar(respuesta);
 
       } catch (error) {
         respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
@@ -136,16 +136,29 @@
       return "💬";
     }
 
-    // ✅ Nuevo: Tito se presenta cuando lo clickeas
+    // ✅ Tito se presenta al hacer clic
     function presentarseTito() {
-      const saludo = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      speechSynthesis.cancel();
-      const voz = new SpeechSynthesisUtterance(saludo);
-      voz.lang = 'es-PE';
-      speechSynthesis.speak(voz);
+      const saludo = "Hola, soy Tito, tu tutor bíblico virtual. Estoy para acompañarte en tu aprendizaje.";
+      hablar(saludo);
+    }
+
+    // ✅ Tito ríe al hacer doble clic
+    function titoBromea() {
+      const imgTito = document.getElementById("tito-img");
+      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
+      
+      // Cambiar imagen a risa
+      imgTito.src = "Tito riendo.png";
+      hablar(mensaje);
+
+      // Volver a la imagen normal después de 3 segundos
+      setTimeout(() => {
+        imgTito.src = "Tito parado.jpg";
+      }, 3000);
     }
   </script>
 
 </body>
 </html>
+
 
