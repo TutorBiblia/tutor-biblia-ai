@@ -24,7 +24,7 @@
 
   <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">🎤 Dictar</button>
 
-  <!-- ✅ Botón para detener voz -->
+  <!-- Botón detener voz -->
   <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">
     🛑 Detener voz
   </button>
@@ -45,7 +45,7 @@
 
       cargando.style.display = 'block';
       respuestaDiv.textContent = '';
-      detenerVoz(); // 🛑 Detiene si Tito está hablando
+      detenerVoz();
 
       try {
         const res = await fetch('/chat', {
@@ -55,13 +55,14 @@
         });
 
         const data = await res.json();
-
         const respuesta = data.reply;
+
+        // Añadir emoji visualmente, pero no en la voz
         const emoji = clasificarEmoji(respuesta);
         const final = `${emoji} ${respuesta}`;
-        respuestaDiv.textContent = final;
 
-        hablar(final); // Tito habla la respuesta
+        respuestaDiv.textContent = final;
+        hablar(respuesta); // ✅ Tito solo lee la parte sin emoji
 
       } catch (error) {
         respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
@@ -71,7 +72,7 @@
       }
     }
 
-    // 🎤 Dictado por voz
+    // Dictado por voz
     function reconocerVoz() {
       if (!('webkitSpeechRecognition' in window)) {
         alert('Tu navegador no soporta reconocimiento de voz.');
@@ -98,20 +99,20 @@
       recognition.start();
     }
 
-    // 🗣️ Voz de Tito
+    // Voz de Tito
     function hablar(texto) {
-      speechSynthesis.cancel(); // Detener cualquier voz previa
+      speechSynthesis.cancel();
       const mensaje = new SpeechSynthesisUtterance(texto);
       mensaje.lang = 'es-PE';
       speechSynthesis.speak(mensaje);
     }
 
-    // 🛑 Detener voz manualmente
+    // Detener voz
     function detenerVoz() {
       speechSynthesis.cancel();
     }
 
-    // 😊 Emoji según el tono
+    // Emoji según el tono de la respuesta
     function clasificarEmoji(texto) {
       const lower = texto.toLowerCase();
       if (lower.includes("bien") || lower.includes("alegría") || lower.includes("esperanza")) return "😊";
@@ -124,5 +125,3 @@
 
 </body>
 </html>
-
-
