@@ -64,7 +64,7 @@
       imgTito.src = "Tito pensando.jpg";
       imgTito.classList.add("thinking");
 
-      // ✅ Tito dice que está pensando
+      // Tito dice que está pensando
       hablar("Estoy pensando... dame unos segundos.");
 
       try {
@@ -139,13 +139,11 @@
       return "💬";
     }
 
-    // ✅ Tito se presenta al hacer clic
     function presentarseTito() {
       const saludo = "Hola, soy Tito, tu tutor bíblico virtual. Estoy para acompañarte en tu aprendizaje.";
       hablar(saludo);
     }
 
-    // ✅ Tito ríe al hacer doble clic
     function titoBromea() {
       const imgTito = document.getElementById("tito-img");
       const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
@@ -155,7 +153,7 @@
 
       setTimeout(() => {
         imgTito.src = "Tito parado.jpg";
-      }, 3000);
+      }, 6000); // Duración extendida a 6 segundos
     }
   </script>
 
