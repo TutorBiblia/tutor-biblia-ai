@@ -8,7 +8,6 @@
     .thinking {
       animation: shake 0.6s infinite;
     }
-
     @keyframes shake {
       0% { transform: rotate(0deg); }
       25% { transform: rotate(2deg); }
@@ -25,7 +24,9 @@
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
       onclick="presentarseTito()" ondblclick="titoBromea()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
-    <p style="font-size: 1.2rem; font-weight: 500;">Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
+    <p id="tito-presentacion" style="font-size: 1.2rem; font-weight: 500;">
+      Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
+    </p>
   </div>
 
   <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
@@ -55,6 +56,7 @@
       const respuestaDiv = document.getElementById('respuesta');
       const cargando = document.getElementById('cargando');
       const imgTito = document.getElementById("tito-img");
+      const presentacion = document.getElementById("tito-presentacion");
 
       cargando.style.display = 'block';
       respuestaDiv.textContent = '';
@@ -63,8 +65,8 @@
       // Cambiar imagen a "pensando"
       imgTito.src = "Tito pensando.jpg";
       imgTito.classList.add("thinking");
+      presentacion.innerHTML = "🧠 Estoy pensando... dame unos segundos.";
 
-      // Tito dice que está pensando
       hablar("Estoy pensando... dame unos segundos.");
 
       try {
@@ -90,6 +92,7 @@
         cargando.style.display = 'none';
         imgTito.src = "Tito parado.jpg";
         imgTito.classList.remove("thinking");
+        presentacion.innerHTML = 'Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.';
       }
     }
 
@@ -146,14 +149,17 @@
 
     function titoBromea() {
       const imgTito = document.getElementById("tito-img");
+      const presentacion = document.getElementById("tito-presentacion");
       const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
 
       imgTito.src = "Tito riendo.png";
+      presentacion.innerHTML = "😄 ¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
       hablar(mensaje);
 
       setTimeout(() => {
         imgTito.src = "Tito parado.jpg";
-      }, 6000); // Duración extendida a 6 segundos
+        presentacion.innerHTML = 'Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.';
+      }, 6000);
     }
   </script>
 
