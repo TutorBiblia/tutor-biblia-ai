@@ -5,25 +5,40 @@
   <title>Tutor Bíblico Tito</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 2rem;">
-  <img src="tito.jpg" alt="Tutor Tito" width="150" style="border-radius: 50%;">
-  <h1>📖 Tutor Bíblico IA</h1>
-  <p style="font-size: 1rem; font-weight: 500;">
-  Hola soy Tito, tu tutor virtual, estoy para acompañarte en tu aprendizaje bíblico:
-</p>
+<body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
 
-  <textarea id="input" rows="4" style="width:100%; padding: 0.5rem;"></textarea>
-  <br/><br/>
-  <button onclick="enviarMensaje()" style="padding: 0.5rem 1rem;">Enviar</button>
+  <!-- Presentación de Tito -->
+  <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+    <img src="tito.jpg" alt="Tutor Tito" style="width: 120px; border-radius: 50%; margin-right: 20px;">
+    <p style="font-size: 1.2rem; font-weight: 500;">Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
+  </div>
 
+  <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
+
+  <!-- Área de entrada -->
+  <textarea id="input" rows="4" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" placeholder="Escribe tu pregunta aquí..."></textarea>
+  <br><br>
+
+  <!-- Botones de control -->
+  <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Enviar pregunta</button>
+  <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">🎤 Dictar</button>
+
+  <!-- Indicador de carga -->
+  <p id="cargando" style="display:none; font-style: italic; color: #888;">⏳ Tito está pensando...</p>
+
+  <!-- Área de respuesta -->
   <h3>Respuesta:</h3>
   <div id="respuesta" style="white-space: pre-wrap; background: #f3f3f3; padding: 1rem; border-radius: 5px;"></div>
 
+  <!-- Script -->
   <script>
     async function enviarMensaje() {
       const mensaje = document.getElementById('input').value;
       const respuestaDiv = document.getElementById('respuesta');
-      respuestaDiv.textContent = '⏳ Esperando respuesta...';
+      const cargando = document.getElementById('cargando');
+
+      cargando.style.display = 'block';
+      respuestaDiv.textContent = '';
 
       try {
         const res = await fetch('/chat', {
@@ -33,12 +48,67 @@
         });
 
         const data = await res.json();
-        respuestaDiv.textContent = data.reply;
+
+        const respuesta = data.reply;
+        const emoji = clasificarEmoji(respuesta);
+        const final = `${emoji} ${respuesta}`;
+        respuestaDiv.textContent = final;
+
+        hablar(final); // Tito habla la respuesta
+
       } catch (error) {
         respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
         console.error(error);
+      } finally {
+        cargando.style.display = 'none';
       }
     }
+
+    // 🎤 Reconocimiento de voz
+    function reconocerVoz() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert('Lo siento, tu navegador no soporta reconocimiento de voz.');
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'es-PE'; // Puedes cambiar a 'es-ES' si prefieres
+
+      recognition.onstart = () => {
+        document.getElementById('input').placeholder = '🎙️ Escuchando...';
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('input').value = transcript;
+        document.getElementById('input').placeholder = 'Escribe tu pregunta aquí...';
+      };
+
+      recognition.onerror = () => {
+        alert('Error al reconocer voz.');
+      };
+
+      recognition.start();
+    }
+
+    // 🗣️ Tito responde con voz
+    function hablar(texto) {
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = 'es-PE';
+      speechSynthesis.speak(mensaje);
+    }
+
+    // 😊 Asigna un emoji según tono de respuesta
+    function clasificarEmoji(texto) {
+      const lower = texto.toLowerCase();
+      if (lower.includes("bien") || lower.includes("alegría") || lower.includes("esperanza")) return "😊";
+      if (lower.includes("no se puede") || lower.includes("triste") || lower.includes("dificultad")) return "😔";
+      if (lower.includes("advertencia") || lower.includes("cuidado")) return "⚠️";
+      if (lower.includes("cristo") || lower.includes("dios")) return "✝️";
+      return "💬";
+    }
   </script>
+
 </body>
 </html>
+
