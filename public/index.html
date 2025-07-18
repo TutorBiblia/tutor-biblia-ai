@@ -64,6 +64,9 @@
       imgTito.src = "Tito pensando.jpg";
       imgTito.classList.add("thinking");
 
+      // ✅ Tito dice que está pensando
+      hablar("Estoy pensando... dame unos segundos.");
+
       try {
         const res = await fetch('/chat', {
           method: 'POST',
@@ -138,7 +141,7 @@
 
     // ✅ Tito se presenta al hacer clic
     function presentarseTito() {
-      const saludo = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      const saludo = "Hola, soy Tito, tu tutor bíblico virtual. Estoy para acompañarte en tu aprendizaje.";
       hablar(saludo);
     }
 
@@ -146,12 +149,10 @@
     function titoBromea() {
       const imgTito = document.getElementById("tito-img");
       const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
-      
-      // Cambiar imagen a risa
+
       imgTito.src = "Tito riendo.png";
       hablar(mensaje);
 
-      // Volver a la imagen normal después de 3 segundos
       setTimeout(() => {
         imgTito.src = "Tito parado.jpg";
       }, 3000);
