@@ -22,7 +22,9 @@
 
   <!-- Presentación de Tito -->
   <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito" style="width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
+    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+      onclick="presentarseTito()"
+      style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
     <p style="font-size: 1.2rem; font-weight: 500;">Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
   </div>
 
@@ -76,7 +78,7 @@
         const final = `${emoji} ${respuesta}`;
 
         respuestaDiv.textContent = final;
-        hablar(respuesta);  // Tito solo lee la respuesta, no el emoji
+        hablar(respuesta);  // Tito solo lee la parte sin emoji
 
       } catch (error) {
         respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
@@ -88,7 +90,6 @@
       }
     }
 
-    // Dictado de voz
     function reconocerVoz() {
       if (!('webkitSpeechRecognition' in window)) {
         alert('Tu navegador no soporta reconocimiento de voz.');
@@ -115,7 +116,6 @@
       recognition.start();
     }
 
-    // Tito habla
     function hablar(texto) {
       speechSynthesis.cancel();
       const mensaje = new SpeechSynthesisUtterance(texto);
@@ -123,12 +123,10 @@
       speechSynthesis.speak(mensaje);
     }
 
-    // Detener voz
     function detenerVoz() {
       speechSynthesis.cancel();
     }
 
-    // Emoji según tono
     function clasificarEmoji(texto) {
       const lower = texto.toLowerCase();
       if (lower.includes("bien") || lower.includes("alegría") || lower.includes("esperanza")) return "😊";
@@ -137,7 +135,17 @@
       if (lower.includes("cristo") || lower.includes("dios")) return "✝️";
       return "💬";
     }
+
+    // ✅ Nuevo: Tito se presenta cuando lo clickeas
+    function presentarseTito() {
+      const saludo = "Hola, soy Tito, tu tutor bíblico virtual. Estoy para acompañarte en tu aprendizaje.";
+      speechSynthesis.cancel();
+      const voz = new SpeechSynthesisUtterance(saludo);
+      voz.lang = 'es-PE';
+      speechSynthesis.speak(voz);
+    }
   </script>
 
 </body>
 </html>
+
