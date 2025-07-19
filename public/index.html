@@ -168,6 +168,48 @@
 
 </body>
 </html>
+<!-- Botón "Aprende sobre la Biblia" -->
+<button onclick="mostrarBiblia()" style="background-color: #8e44ad; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">
+  📘 Aprende sobre la Biblia
+</button>
+
+<!-- Contenido desplegable con voz -->
+<div id="contenido-biblia" style="display: none; background-color: #fff; border: 1px solid #ccc; border-radius: 10px; padding: 1rem; margin-top: 1rem;">
+
+  <h4 onclick="hablarBiblia('biblia1')" style="cursor: pointer; color: #2980b9;">1. ¿Qué es la Biblia?</h4>
+  <p id="biblia1">La Biblia es una colección de libros sagrados que constituyen la revelación de Dios a la humanidad, redactada en diversos géneros y contextos. No es un libro único, sino una biblioteca con textos históricos, poéticos, sapienciales y proféticos, que narran la historia de la salvación. Es Palabra de Dios en palabras humanas, y su unidad teológica se manifiesta en la progresiva revelación del plan divino desde la creación hasta la plenitud en Cristo.</p>
+
+  <h4 onclick="hablarBiblia('biblia2')" style="cursor: pointer; color: #2980b9;">2. Inspiración y Revelación</h4>
+  <p id="biblia2">La inspiración bíblica es la acción del Espíritu Santo que impulsa a los autores sagrados a escribir lo que Dios quiere comunicar. La revelación es la manifestación libre de Dios que se da en la historia, especialmente en Jesucristo. La Biblia, entonces, es testimonio de esta revelación, interpretada a la luz de la fe y bajo la guía del magisterio eclesial. No se trata de dictado divino, sino de colaboración entre Dios y el ser humano.</p>
+
+  <h4 onclick="hablarBiblia('biblia3')" style="cursor: pointer; color: #2980b9;">3. El canon de la Biblia</h4>
+  <p id="biblia3">El canon bíblico es el conjunto de libros reconocidos como inspirados por la Iglesia. Su formación fue un proceso gradual que culminó en los primeros siglos cristianos. En la Iglesia católica, el canon incluye 73 libros: 46 del Antiguo Testamento y 27 del Nuevo. Este criterio de canonicidad fue guiado por el uso litúrgico, la apostolicidad y la coherencia teológica con el kerigma cristiano.</p>
+
+  <h4 onclick="hablarBiblia('biblia4')" style="cursor: pointer; color: #2980b9;">4. Tipos, géneros y formas literarias</h4>
+  <p id="biblia4">La Biblia emplea múltiples géneros literarios: narrativo, poético, legislativo, sapiencial, apocalíptico, entre otros. Comprender estos géneros es clave para una interpretación adecuada. Por ejemplo, los salmos usan lenguaje simbólico, las parábolas tienen función pedagógica y los relatos históricos comunican teología más que crónica factual. La forma literaria nos orienta hacia el sentido que el autor quiso transmitir bajo inspiración divina.</p>
+
+  <h4 onclick="hablarBiblia('biblia5')" style="cursor: pointer; color: #2980b9;">5. Contexto cultural e histórico del Antiguo Testamento</h4>
+  <p id="biblia5">El Antiguo Testamento se desarrolló en un entorno semita, con influencias mesopotámicas, cananeas y egipcias. Las instituciones sociales, las leyes y las imágenes teológicas reflejan este contexto. El éxodo, por ejemplo, es inseparable del ambiente de opresión imperial egipcia. Comprender este trasfondo permite ver cómo Israel configuró su fe en diálogo —y a veces en confrontación— con las culturas vecinas.</p>
+
+  <h4 onclick="hablarBiblia('biblia6')" style="cursor: pointer; color: #2980b9;">6. Contexto cultural e histórico del Nuevo Testamento</h4>
+  <p id="biblia6">El Nuevo Testamento surge en el mundo grecorromano, bajo la ocupación del Imperio Romano. La lengua común era el griego, y coexistían corrientes religiosas judías diversas: fariseos, saduceos, esenios, zelotes. La figura de Jesús y el mensaje cristiano se sitúan en este marco, donde el anuncio del Reino contrasta con los poderes políticos y religiosos del momento. Este contexto explica muchas tensiones narradas en los evangelios.</p>
+
+  <h4 onclick="hablarBiblia('biblia7')" style="cursor: pointer; color: #2980b9;">7. La alianza como eje transversal</h4>
+  <p id="biblia7">La alianza es el hilo conductor que une toda la Biblia. Desde la alianza con Noé, pasando por Abrahán, Moisés y David, hasta la nueva y eterna alianza en Cristo, Dios se compromete con su pueblo en un vínculo de fidelidad. La alianza expresa la iniciativa divina, la respuesta humana y la dimensión comunitaria de la fe. En Jesús, la alianza se universaliza y alcanza su plenitud escatológica.</p>
+</div>
+
+<script>
+  function mostrarBiblia() {
+    const bloque = document.getElementById("contenido-biblia");
+    bloque.style.display = bloque.style.display === "none" ? "block" : "none";
+  }
+
+  function hablarBiblia(id) {
+    detenerVoz();  // Detiene voz anterior si está activa
+    const texto = document.getElementById(id).textContent;
+    hablar(texto); // Usa la función ya existente de Tito
+  }
+</script>
 
 
 
