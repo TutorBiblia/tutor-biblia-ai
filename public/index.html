@@ -99,13 +99,19 @@
       border-left: 4px solid #2196f3;
       border-radius: 5px;
     }
+
+    #titoExplica {
+      display: none;
+      margin-top: 10px;
+      width: 100px;
+    }
   </style>
 </head>
 <body>
 
   <!-- Presentación de Tito -->
   <div class="presentacion">
-    <img src="tito.png" alt="Tito">
+    <img src="Tito parado.jpg" alt="Tito parado">
     <div>
       <p><strong>Hola soy Tito, tu tutor virtual.</strong><br>Estoy para acompañarte en tu aprendizaje bíblico.</p>
     </div>
@@ -126,6 +132,9 @@
     <button onclick="detenerLectura()" class="rojo">🛑 Detener voz</button>
     <button onclick="toggleMenu()" class="morado">📖 Aprende la Biblia</button>
   </div>
+
+  <!-- Imagen de Tito explicando -->
+  <img id="titoExplica" src="Tito explica.png" alt="Tito explicando">
 
   <!-- Menú desplegable de temas -->
   <div id="menuBiblia">
@@ -163,13 +172,17 @@
 
     function toggleMenu() {
       const menu = document.getElementById("menuBiblia");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
+      const img = document.getElementById("titoExplica");
+      const isOpen = menu.style.display === "block";
+      menu.style.display = isOpen ? "none" : "block";
+      img.style.display = isOpen ? "none" : "block";
     }
 
     function mostrarTexto(index) {
       detenerLectura();
       const text = textos[index];
       document.getElementById("explicacion").innerText = text;
+      document.getElementById("titoExplica").style.display = "block";
       hablar(text);
     }
 
@@ -185,6 +198,7 @@
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
       }
+      document.getElementById("titoExplica").style.display = "none";
     }
   </script>
 
