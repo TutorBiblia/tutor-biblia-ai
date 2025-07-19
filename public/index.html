@@ -2,235 +2,169 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tutor Bíblico Tito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fff6ed;
-      margin: 0;
-      padding: 10px;
+    .thinking {
+      animation: shake 0.6s infinite;
     }
 
-    .presentacion {
-      background-color: #e9f2ff;
-      padding: 10px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .presentacion img {
-      width: 80px;
-      height: auto;
-      border-radius: 50%;
-    }
-
-    .botones {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    button {
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      flex: 1 1 45%;
-    }
-
-    #enviarBtn { background-color: #007bff; }
-    #dictarBtn { background-color: #28a745; }
-    #detenerBtn { background-color: #dc3545; }
-    #bibliaBtn { background-color: #6f42c1; }
-
-    #menuBiblia {
-      display: none;
-      margin-top: 20px;
-      background-color: #f1f8ff;
-      padding: 15px;
-      border-radius: 10px;
-      border-left: 5px solid #2196f3;
-    }
-
-    #menuBiblia ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    #menuBiblia li {
-      cursor: pointer;
-      padding: 10px;
-      margin-bottom: 8px;
-      background-color: #e3ecf9;
-      border-radius: 5px;
-    }
-
-    #menuBiblia li:hover {
-      background-color: #d2e3f7;
-    }
-
-    #explicacion {
-      margin-top: 15px;
-      padding: 10px;
-      background-color: #ffffff;
-      border-left: 4px solid #2196f3;
-      border-radius: 5px;
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
     }
   </style>
 </head>
-<body>
+<body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
 
-  <div class="presentacion" ondblclick="hacerDobleClic()" onclick="controladorClick()">
-    <img id="imagenTito" src="Tito parado.jpg" alt="Tito">
-    <div>
-      <strong id="frase1">Hola soy Tito, tu tutor virtual.</strong><br>
-      <span id="frase2">Estoy para acompañarte en tu aprendizaje bíblico.</span>
-    </div>
+  <!-- Presentación de Tito -->
+  <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+      onclick="presentarseTito()" ondblclick="titoBromea()"
+      style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
+    <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
+      Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
+    </p>
   </div>
 
-  <h2>📖 Tutor Bíblico IA</h2>
+  <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
 
-  <textarea placeholder="Escribe tu pregunta aquí..." style="width: 100%; height: 50px; font-size: 16px;"></textarea>
+  <!-- Entrada de texto -->
+  <textarea id="input" rows="4" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" placeholder="Escribe tu pregunta aquí..."></textarea>
+  <br><br>
 
-  <div class="botones">
-    <button id="enviarBtn">Enviar pregunta</button>
-    <button id="dictarBtn">🎤 Dictar</button>
-    <button id="detenerBtn">⏺️ Detener voz</button>
-    <button id="bibliaBtn" onclick="toggleMenu()">📖 Aprende la Biblia</button>
-  </div>
+  <!-- Botones -->
+  <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Enviar pregunta</button>
+  <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">🎤 Dictar</button>
+  <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">
+    🛑 Detener voz
+  </button>
 
-  <div id="menuBiblia">
-    <ul>
-      <li onclick="mostrarTexto(0)">1. ¿Qué es la Biblia?</li>
-      <li onclick="mostrarTexto(1)">2. Inspiración y Revelación</li>
-      <li onclick="mostrarTexto(2)">3. ¿Qué es el Canon Bíblico?</li>
-      <li onclick="mostrarTexto(3)">4. Géneros y Formas Literarias</li>
-      <li onclick="mostrarTexto(4)">5. Contexto del Antiguo Testamento</li>
-      <li onclick="mostrarTexto(5)">6. Contexto del Nuevo Testamento</li>
-      <li onclick="mostrarTexto(6)">7. La Alianza como hilo conductor</li>
-    </ul>
-    <div id="explicacion"></div>
-  </div>
+  <!-- Indicador de carga -->
+  <p id="cargando" style="display:none; font-style: italic; color: #888;">⏳ Tito está pensando...</p>
 
+  <!-- Área de respuesta -->
+  <h3>Respuesta:</h3>
+  <div id="respuesta" style="white-space: pre-wrap; background: #f3f3f3; padding: 1rem; border-radius: 5px;"></div>
+
+  <!-- Script -->
   <script>
-    let clickTimer;
-    const imagenTito = document.getElementById("imagenTito");
-    const frase1 = document.getElementById("frase1");
-    const frase2 = document.getElementById("frase2");
+    async function enviarMensaje() {
+      const mensaje = document.getElementById('input').value;
+      const respuestaDiv = document.getElementById('respuesta');
+      const cargando = document.getElementById('cargando');
+      const imgTito = document.getElementById("tito-img");
+      const presentacionTexto = document.getElementById("presentacion-texto");
 
-    const titoParado = "Tito parado.jpg";
-    const titoRiendo = "Tito riendo.png";
+      cargando.style.display = 'block';
+      respuestaDiv.textContent = '';
+      detenerVoz();
 
-    const textos = [
-  "La Biblia es la recopilación de libros que narran la revelación de Dios en la historia. Escrita por diversos autores y en distintos contextos, su unidad se da por la acción del Espíritu Santo. El Antiguo Testamento recoge la historia del pueblo de Israel, mientras que el Nuevo Testamento revela la plenitud de la salvación en Cristo. A través de relatos, leyes, profecías y enseñanzas, la Biblia forma la base de la fe cristiana y orienta la vida del creyente hacia la comunión con Dios.",
-  "La inspiración es el soplo del Espíritu que impulsa a los autores sagrados a escribir según la voluntad divina. La revelación es el acto por el cual Dios se manifiesta a la humanidad, culminando en Jesucristo, Palabra encarnada. La Biblia recoge esta revelación, escrita bajo inspiración divina y transmitida fielmente por la comunidad de fe. Inspiración y revelación trabajan juntas: la primera garantiza la fidelidad al mensaje de Dios; la segunda revela su deseo de comunicarse con su pueblo.",
-  "El canon bíblico es el conjunto de libros reconocidos como inspirados y normativos por la Iglesia. En la tradición católica, comprende 73 libros. Su formación fue progresiva, discernida por el uso litúrgico, la enseñanza apostólica y la fidelidad doctrinal. El canon garantiza unidad y autenticidad en la fe. Su definición respondió a desafíos doctrinales y pastorales, guiada por el Espíritu Santo y el discernimiento eclesial. Es criterio seguro para interpretar la revelación divina.",
-  "La Biblia no es un libro uniforme, sino una biblioteca de géneros: narraciones, leyes, salmos, proverbios, cartas y apocalipsis. Cada forma literaria responde a un contexto y propósito. Leer adecuadamente la Escritura exige identificar el género empleado: el lenguaje simbólico del Génesis no se interpreta como crónica histórica, y las parábolas de Jesús no son fábulas. El género guía al lector a captar el sentido profundo que Dios quiere comunicar en cada texto.",
-  "El Antiguo Testamento refleja culturas como la mesopotámica, egipcia, cananea y persa. Sus instituciones, relatos y leyes tienen paralelos en el antiguo Oriente Próximo. Comprender ese trasfondo histórico permite captar mejor el alcance y originalidad del mensaje bíblico. La figura del rey, la alianza, el templo o los profetas responden a modelos culturales, pero transformados por la fe en el Dios de Israel. La historia de la salvación ocurre en coordenadas culturales concretas.",
-  "El Nuevo Testamento se sitúa en un mundo grecorromano con raíces judías. Jesús vivió bajo la dominación romana, predicando dentro del judaísmo del Segundo Templo. Sus palabras y signos remiten a las promesas del AT, pero en clave escatológica y mesiánica. Pablo y los demás apóstoles anunciaron a Cristo en ciudades helenísticas, usando categorías filosóficas y religiosas de su tiempo. Entender este contexto histórico y cultural ilumina el alcance misionero y universal del Evangelio.",
-  "La alianza es el eje que articula toda la revelación bíblica. Dios se compromete libremente con la humanidad mediante pactos: con Noé, Abrahán, Moisés y David. Cada alianza revela progresivamente el designio salvífico de Dios. La culminación se da en la nueva alianza en Cristo, sellada con su sangre y abierta a toda la humanidad. Esta continuidad da unidad a la Biblia y sentido a la historia: Dios es fiel, y su amor es irrevocable."
-];
+      // Cambiar imagen a "pensando"
+      imgTito.src = "Tito pensando.jpg";
+      imgTito.classList.add("thinking");
+      presentacionTexto.textContent = "Estoy pensando... dame unos segundos.";
+      hablar("Estoy pensando... dame unos segundos.");
 
-    function hacerClic() {
-      imagenTito.src = titoParado;
-      frase1.innerText = "Hola soy Tito, tu tutor virtual.";
-      frase2.innerText = "Estoy para acompañarte en tu aprendizaje bíblico.";
-      hablar(frase1.innerText + " " + frase2.innerText);
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: mensaje })
+        });
+
+        const data = await res.json();
+        const respuesta = data.reply;
+
+        const emoji = clasificarEmoji(respuesta);
+        const final = `${emoji} ${respuesta}`;
+
+        respuestaDiv.textContent = final;
+
+        // Mostrar imagen de explicando
+        imgTito.src = "Tito explica.png";
+        presentacionTexto.textContent = "Presta atención";
+        hablar(respuesta);
+
+      } catch (error) {
+        respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
+        console.error(error);
+      } finally {
+        cargando.style.display = 'none';
+        imgTito.classList.remove("thinking");
+      }
     }
 
-    function hacerDobleClic() {
-      clearTimeout(clickTimer);
-      imagenTito.src = titoRiendo;
-      frase1.innerText = "¡Me haces cosquillas!";
-      frase2.innerText = "¿Quieres hacerme una pregunta?";
-      hablar(frase1.innerText + " " + frase2.innerText);
-      setTimeout(() => {
-        hacerClic();
-      }, 6000);
-    }
+    function reconocerVoz() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert('Tu navegador no soporta reconocimiento de voz.');
+        return;
+      }
 
-    function controladorClick() {
-      clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => {
-        hacerClic();
-      }, 300);
-    }
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'es-PE';
 
-    function toggleMenu() {
-      const menu = document.getElementById("menuBiblia");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
+      recognition.onstart = () => {
+        document.getElementById('input').placeholder = '🎙️ Escuchando...';
+      };
 
-    function mostrarTexto(index) {
-      document.getElementById("explicacion").innerText = textos[index];
-      hablar(textos[index]);
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('input').value = transcript;
+        document.getElementById('input').placeholder = 'Escribe tu pregunta aquí...';
+      };
+
+      recognition.onerror = () => {
+        alert('Error al reconocer la voz.');
+      };
+
+      recognition.start();
     }
 
     function hablar(texto) {
-  detenerVoz();
-  const speech = new SpeechSynthesisUtterance();
-  speech.lang = "es-ES";
-  speech.text = texto;
-  window.speechSynthesis.speak(speech);
-}
-  function detenerVoz() {
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-  }
-}
+      speechSynthesis.cancel();
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = 'es-PE';
+      speechSynthesis.speak(mensaje);
+    }
 
-// Vincular botón de detener voz
-const detenerBtn = document.getElementById("detenerBtn");
-detenerBtn.addEventListener("click", detenerVoz);
+    function detenerVoz() {
+      speechSynthesis.cancel();
+    }
 
-// Restaurar botón de dictado (reconocimiento de voz)
-const dictarBtn = document.getElementById("dictarBtn");
-const textarea = document.querySelector("textarea");
+    function clasificarEmoji(texto) {
+      const lower = texto.toLowerCase();
+      if (lower.includes("bien") || lower.includes("alegría") || lower.includes("esperanza")) return "😊";
+      if (lower.includes("no se puede") || lower.includes("triste") || lower.includes("dificultad")) return "😔";
+      if (lower.includes("advertencia") || lower.includes("cuidado")) return "⚠️";
+      if (lower.includes("cristo") || lower.includes("dios")) return "✝️";
+      return "💬";
+    }
 
-if ('webkitSpeechRecognition' in window) {
-  const reconocimiento = new webkitSpeechRecognition();
-  reconocimiento.lang = "es-ES";
-  reconocimiento.continuous = false;
-  reconocimiento.interimResults = false;
+    function presentarseTito() {
+      const saludo = "Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      document.getElementById("presentacion-texto").textContent = saludo;
+      hablar(saludo);
+    }
 
-  dictarBtn.addEventListener("click", () => {
-    reconocimiento.start();
-  });
+    function titoBromea() {
+      const imgTito = document.getElementById("tito-img");
+      const presentacionTexto = document.getElementById("presentacion-texto");
+      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
 
-  reconocimiento.onresult = (event) => {
-    const resultado = event.results[0][0].transcript;
-    textarea.value = resultado;
-  };
+      imgTito.src = "Tito riendo.png";
+      presentacionTexto.textContent = mensaje;
+      hablar(mensaje);
 
-  reconocimiento.onerror = (event) => {
-    console.error("Error en reconocimiento de voz:", event.error);
-  };
-}
-
-// Añadir respuesta simulada al botón enviar
-const enviarBtn = document.getElementById("enviarBtn");
-
-enviarBtn.addEventListener("click", () => {
-  const pregunta = textarea.value.trim();
-  if (pregunta) {
-    const respuesta = "Estoy pensando... dame unos segundos.";
-    hablar(respuesta);
-    setTimeout(() => {
-      const respuestaFinal = "Esa es una excelente pregunta. En la Biblia, encontramos que... (respuesta simulada)";
-      hablar(respuestaFinal);
-      document.getElementById("explicacion").innerText = respuestaFinal;
-    }, 3000);
-  }
-});
-
-</script>
+      setTimeout(() => {
+        imgTito.src = "Tito parado.jpg";
+        presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      }, 6000);
+    }
+  </script>
 
 </body>
 </html>
