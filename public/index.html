@@ -2,73 +2,152 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Tutor Tito - Aprende la Biblia</title>
+  <title>Tutor Bíblico IA - Tito</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      background-color: #fff8f0;
+      padding: 20px;
     }
-    #menuBiblia {
-      display: none;
-      margin-top: 10px;
+
+    .presentacion {
+      background-color: #eef6ff;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-    .tema {
-      margin-bottom: 8px;
+
+    .presentacion img {
+      width: 100px;
+      border-radius: 50%;
+    }
+
+    .titulo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .input-container {
+      margin-top: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      font-size: 16px;
       padding: 10px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-    .explicacion {
-      display: none;
-      margin-top: 5px;
-      padding: 10px;
-      border-left: 3px solid #4CAF50;
-      background-color: #e9ffe9;
+
+    .botones {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    button {
+
+    .botones button {
+      flex: 1 1 auto;
       padding: 10px 15px;
-      margin-bottom: 10px;
+      border: none;
+      border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      color: white;
     }
-    #titoExplica {
+
+    .azul { background-color: #007bff; }
+    .verde { background-color: #28a745; }
+    .rojo { background-color: #dc3545; }
+    .morado { background-color: #6f42c1; }
+
+    #menuBiblia {
       display: none;
-      max-width: 200px;
-      margin-top: 10px;
+      margin-top: 20px;
+      background-color: #f1f8ff;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 5px solid #2196f3;
+    }
+
+    #menuBiblia ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #menuBiblia li {
+      cursor: pointer;
+      padding: 8px;
+      margin-bottom: 6px;
+      background-color: #e3ecf9;
+      border-radius: 5px;
+    }
+
+    #menuBiblia li:hover {
+      background-color: #d2e3f7;
+    }
+
+    #explicacion {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #ffffff;
+      border-left: 4px solid #2196f3;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
 
-  <button onclick="toggleMenu()">📖 Aprende la Biblia</button>
-  <button onclick="detenerLectura()">🔇 Apagar Audio</button>
-
-  <div id="menuBiblia">
-    <div class="tema" onclick="mostrarTexto(0)">1. ¿Qué es la Biblia?</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(1)">2. Inspiración y Revelación</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(2)">3. ¿Qué es el Canon Bíblico?</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(3)">4. Géneros y Formas Literarias</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(4)">5. Contexto del Antiguo Testamento</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(5)">6. Contexto del Nuevo Testamento</div>
-    <div class="explicacion"></div>
-
-    <div class="tema" onclick="mostrarTexto(6)">7. La Alianza como Hilo Conductor</div>
-    <div class="explicacion"></div>
+  <!-- Presentación de Tito -->
+  <div class="presentacion">
+    <img src="tito.png" alt="Tito">
+    <div>
+      <p><strong>Hola soy Tito, tu tutor virtual.</strong><br>Estoy para acompañarte en tu aprendizaje bíblico.</p>
+    </div>
   </div>
 
-  <img id="titoExplica" src="tito-explica.png" alt="Tito explicando">
+  <!-- Título -->
+  <h2 class="titulo">📖 Tutor Bíblico IA</h2>
 
+  <!-- Área de entrada -->
+  <div class="input-container">
+    <textarea placeholder="Escribe tu pregunta aquí..."></textarea>
+  </div>
+
+  <!-- Botones -->
+  <div class="botones">
+    <button class="azul">Enviar pregunta</button>
+    <button class="verde">🎤 Dictar</button>
+    <button onclick="detenerLectura()" class="rojo">🛑 Detener voz</button>
+    <button onclick="toggleMenu()" class="morado">📖 Aprende la Biblia</button>
+  </div>
+
+  <!-- Menú desplegable de temas -->
+  <div id="menuBiblia">
+    <ul>
+      <li onclick="mostrarTexto(0)">1. ¿Qué es la Biblia?</li>
+      <li onclick="mostrarTexto(1)">2. Inspiración y Revelación</li>
+      <li onclick="mostrarTexto(2)">3. ¿Qué es el Canon Bíblico?</li>
+      <li onclick="mostrarTexto(3)">4. Géneros y Formas Literarias</li>
+      <li onclick="mostrarTexto(4)">5. Contexto del Antiguo Testamento</li>
+      <li onclick="mostrarTexto(5)">6. Contexto del Nuevo Testamento</li>
+      <li onclick="mostrarTexto(6)">7. La Alianza como hilo conductor</li>
+    </ul>
+    <div id="explicacion"></div>
+  </div>
+
+  <!-- Respuesta (opcional) -->
+  <div class="input-container">
+    <p><strong>Respuesta:</strong></p>
+    <div id="respuesta" style="background-color:#fff; padding:10px; border-radius:8px; min-height:40px; border:1px solid #ccc;"></div>
+  </div>
+
+  <!-- Script funcional -->
   <script>
     const textos = [
       "La Biblia es una colección de libros sagrados que relatan la relación entre Dios y la humanidad. Está compuesta por el Antiguo y el Nuevo Testamento.",
@@ -89,13 +168,9 @@
 
     function mostrarTexto(index) {
       detenerLectura();
-      const explicaciones = document.querySelectorAll('.explicacion');
-      explicaciones.forEach((el, i) => {
-        el.style.display = i === index ? 'block' : 'none';
-        el.innerText = i === index ? textos[i] : '';
-      });
-      document.getElementById("titoExplica").style.display = "block";
-      hablar(textos[index]);
+      const text = textos[index];
+      document.getElementById("explicacion").innerText = text;
+      hablar(text);
     }
 
     function hablar(texto) {
@@ -110,11 +185,11 @@
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
       }
-      document.getElementById("titoExplica").style.display = "none";
     }
   </script>
 
 </body>
 </html>
+
 
 
