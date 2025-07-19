@@ -129,14 +129,14 @@
     const titoRiendo = "Tito riendo.png";
 
     const textos = [
-      "La Biblia es una colección de libros inspirados por Dios que relatan su acción salvífica en la historia. Está dividida en Antiguo y Nuevo Testamento y contiene diversos géneros. Es el testimonio escrito de la revelación progresiva de Dios y fundamento de la fe cristiana.",
-      "Inspiración es la acción del Espíritu Santo que guía a los autores bíblicos. Revelación es la manifestación progresiva de Dios en la historia. Ambas confluyen en la Escritura como Palabra de Dios escrita en lenguaje humano, culminando en Jesucristo.",
-      "El canon bíblico es el conjunto de libros reconocidos por la Iglesia como inspirados. Se formó progresivamente, y su cierre definió los textos normativos. El canon católico incluye 73 libros, seleccionados por su origen apostólico, contenido teológico y uso litúrgico.",
-      "La Biblia emplea diversos géneros: narrativo, legal, poético, profético, sapiencial y apocalíptico. Cada forma literaria transmite el mensaje divino desde contextos culturales e intenciones distintas. Su correcta interpretación requiere conocer el género para captar el sentido teológico.",
-      "El AT refleja culturas del Antiguo Oriente, como Egipto y Mesopotamia. Las leyes, relatos y profecías tienen trasfondo histórico. Conocer ese contexto permite comprender mejor el significado original y cómo Dios actuaba en esos marcos culturales.",
-      "El NT se desarrolla en un mundo judío-helénico. Jesús predica en un contexto judío con tensiones políticas, y los apóstoles evangelizan en el mundo romano. Este trasfondo ilumina la novedad del mensaje cristiano y su encarnación cultural.",
-      "La alianza es el hilo conductor de toda la Biblia. Dios establece pactos con Noé, Abraham, Israel y, finalmente, en Jesús. Esta progresión revela una pedagogía divina que culmina en la nueva alianza eterna en Cristo crucificado y resucitado."
-    ];
+  "La Biblia es la recopilación de libros que narran la revelación de Dios en la historia. Escrita por diversos autores y en distintos contextos, su unidad se da por la acción del Espíritu Santo. El Antiguo Testamento recoge la historia del pueblo de Israel, mientras que el Nuevo Testamento revela la plenitud de la salvación en Cristo. A través de relatos, leyes, profecías y enseñanzas, la Biblia forma la base de la fe cristiana y orienta la vida del creyente hacia la comunión con Dios.",
+  "La inspiración es el soplo del Espíritu que impulsa a los autores sagrados a escribir según la voluntad divina. La revelación es el acto por el cual Dios se manifiesta a la humanidad, culminando en Jesucristo, Palabra encarnada. La Biblia recoge esta revelación, escrita bajo inspiración divina y transmitida fielmente por la comunidad de fe. Inspiración y revelación trabajan juntas: la primera garantiza la fidelidad al mensaje de Dios; la segunda revela su deseo de comunicarse con su pueblo.",
+  "El canon bíblico es el conjunto de libros reconocidos como inspirados y normativos por la Iglesia. En la tradición católica, comprende 73 libros. Su formación fue progresiva, discernida por el uso litúrgico, la enseñanza apostólica y la fidelidad doctrinal. El canon garantiza unidad y autenticidad en la fe. Su definición respondió a desafíos doctrinales y pastorales, guiada por el Espíritu Santo y el discernimiento eclesial. Es criterio seguro para interpretar la revelación divina.",
+  "La Biblia no es un libro uniforme, sino una biblioteca de géneros: narraciones, leyes, salmos, proverbios, cartas y apocalipsis. Cada forma literaria responde a un contexto y propósito. Leer adecuadamente la Escritura exige identificar el género empleado: el lenguaje simbólico del Génesis no se interpreta como crónica histórica, y las parábolas de Jesús no son fábulas. El género guía al lector a captar el sentido profundo que Dios quiere comunicar en cada texto.",
+  "El Antiguo Testamento refleja culturas como la mesopotámica, egipcia, cananea y persa. Sus instituciones, relatos y leyes tienen paralelos en el antiguo Oriente Próximo. Comprender ese trasfondo histórico permite captar mejor el alcance y originalidad del mensaje bíblico. La figura del rey, la alianza, el templo o los profetas responden a modelos culturales, pero transformados por la fe en el Dios de Israel. La historia de la salvación ocurre en coordenadas culturales concretas.",
+  "El Nuevo Testamento se sitúa en un mundo grecorromano con raíces judías. Jesús vivió bajo la dominación romana, predicando dentro del judaísmo del Segundo Templo. Sus palabras y signos remiten a las promesas del AT, pero en clave escatológica y mesiánica. Pablo y los demás apóstoles anunciaron a Cristo en ciudades helenísticas, usando categorías filosóficas y religiosas de su tiempo. Entender este contexto histórico y cultural ilumina el alcance misionero y universal del Evangelio.",
+  "La alianza es el eje que articula toda la revelación bíblica. Dios se compromete libremente con la humanidad mediante pactos: con Noé, Abrahán, Moisés y David. Cada alianza revela progresivamente el designio salvífico de Dios. La culminación se da en la nueva alianza en Cristo, sellada con su sangre y abierta a toda la humanidad. Esta continuidad da unidad a la Biblia y sentido a la historia: Dios es fiel, y su amor es irrevocable."
+];
 
     function hacerClic() {
       imagenTito.src = titoParado;
@@ -174,15 +174,67 @@
     }
 
     function hablar(texto) {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "es-ES";
-      speech.text = texto;
-      window.speechSynthesis.speak(speech);
-    }
-  </script>
+  detenerVoz();
+  const speech = new SpeechSynthesisUtterance();
+  speech.lang = "es-ES";
+  speech.text = texto;
+  window.speechSynthesis.speak(speech);
+}
+  function detenerVoz() {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+// Vincular botón de detener voz
+const detenerBtn = document.getElementById("detenerBtn");
+detenerBtn.addEventListener("click", detenerVoz);
+
+// Restaurar botón de dictado (reconocimiento de voz)
+const dictarBtn = document.getElementById("dictarBtn");
+const textarea = document.querySelector("textarea");
+
+if ('webkitSpeechRecognition' in window) {
+  const reconocimiento = new webkitSpeechRecognition();
+  reconocimiento.lang = "es-ES";
+  reconocimiento.continuous = false;
+  reconocimiento.interimResults = false;
+
+  dictarBtn.addEventListener("click", () => {
+    reconocimiento.start();
+  });
+
+  reconocimiento.onresult = (event) => {
+    const resultado = event.results[0][0].transcript;
+    textarea.value = resultado;
+  };
+
+  reconocimiento.onerror = (event) => {
+    console.error("Error en reconocimiento de voz:", event.error);
+  };
+}
+
+// Añadir respuesta simulada al botón enviar
+const enviarBtn = document.getElementById("enviarBtn");
+
+enviarBtn.addEventListener("click", () => {
+  const pregunta = textarea.value.trim();
+  if (pregunta) {
+    const respuesta = "Estoy pensando... dame unos segundos.";
+    hablar(respuesta);
+    setTimeout(() => {
+      const respuestaFinal = "Esa es una excelente pregunta. En la Biblia, encontramos que... (respuesta simulada)";
+      hablar(respuestaFinal);
+      document.getElementById("explicacion").innerText = respuestaFinal;
+    }, 3000);
+  }
+});
+
+</script>
 
 </body>
 </html>
+
 
 
 
