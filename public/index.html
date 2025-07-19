@@ -2,70 +2,53 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutor Bíblico IA - Tito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tutor Bíblico Tito</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fff8f0;
+      background-color: #fff6ed;
       margin: 0;
-      padding: 15px;
+      padding: 10px;
     }
 
     .presentacion {
-      background-color: #eef6ff;
-      border-radius: 15px;
-      padding: 15px;
+      background-color: #e9f2ff;
+      padding: 10px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
       flex-wrap: wrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .presentacion img {
       width: 80px;
+      height: auto;
       border-radius: 50%;
-      cursor: pointer;
     }
 
-    .titulo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 60px;
-      font-size: 16px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .fila-botones {
-      margin-top: 12px;
+    .botones {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin-top: 10px;
     }
 
-    .fila-botones button {
-      flex: 1 1 45%;
-      padding: 12px 10px;
+    button {
+      padding: 10px;
       border: none;
       border-radius: 8px;
-      font-size: 15px;
-      cursor: pointer;
+      font-weight: bold;
       color: white;
+      cursor: pointer;
+      flex: 1 1 45%;
     }
 
-    .azul { background-color: #007bff; }
-    .verde { background-color: #28a745; }
-    .rojo { background-color: #dc3545; }
-    .morado { background-color: #6f42c1; }
+    #enviarBtn { background-color: #007bff; }
+    #dictarBtn { background-color: #28a745; }
+    #detenerBtn { background-color: #dc3545; }
+    #bibliaBtn { background-color: #6f42c1; }
 
     #menuBiblia {
       display: none;
@@ -100,53 +83,28 @@
       border-left: 4px solid #2196f3;
       border-radius: 5px;
     }
-
-    #titoExplica {
-      display: none;
-      margin-top: 10px;
-      width: 90px;
-    }
-
-    #pensando {
-      margin-top: 10px;
-      font-style: italic;
-      color: #666;
-      display: none;
-    }
-
-    #frase {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #444;
-    }
   </style>
 </head>
 <body>
 
-  <div class="presentacion">
-    <img id="titoImagen" src="Tito parado.jpg" alt="Tito">
+  <div class="presentacion" ondblclick="hacerDobleClic()" onclick="controladorClick()">
+    <img id="imagenTito" src="Tito parado.jpg" alt="Tito">
     <div>
-      <p><strong>Hola soy Tito, tu tutor virtual.</strong><br>Estoy para acompañarte en tu aprendizaje bíblico.</p>
-      <div id="frase"></div>
+      <strong id="frase1">Hola soy Tito, tu tutor virtual.</strong><br>
+      <span id="frase2">Estoy para acompañarte en tu aprendizaje bíblico.</span>
     </div>
   </div>
 
-  <h2 class="titulo">📖 Tutor Bíblico IA</h2>
+  <h2>📖 Tutor Bíblico IA</h2>
 
-  <textarea placeholder="Escribe tu pregunta aquí..."></textarea>
+  <textarea placeholder="Escribe tu pregunta aquí..." style="width: 100%; height: 50px; font-size: 16px;"></textarea>
 
-  <div class="fila-botones">
-    <button class="azul">Enviar pregunta</button>
-    <button class="verde">🎤 Dictar</button>
+  <div class="botones">
+    <button id="enviarBtn">Enviar pregunta</button>
+    <button id="dictarBtn">🎤 Dictar</button>
+    <button id="detenerBtn">⏺️ Detener voz</button>
+    <button id="bibliaBtn" onclick="toggleMenu()">📖 Aprende la Biblia</button>
   </div>
-
-  <div class="fila-botones">
-    <button onclick="detenerLectura()" class="rojo">🛑 Detener voz</button>
-    <button onclick="toggleMenu()" class="morado">📖 Aprende la Biblia</button>
-  </div>
-
-  <p id="pensando">Estoy pensando... dame unos segundos.</p>
-  <img id="titoExplica" src="Tito explica.png" alt="Tito explicando">
 
   <div id="menuBiblia">
     <ul>
@@ -162,35 +120,48 @@
   </div>
 
   <script>
-    const textos = [
-      "La Biblia es una colección de libros que constituyen la Sagrada Escritura. Es el testimonio escrito de la Revelación divina y narra la historia de la salvación desde la creación hasta la plenitud en Cristo. Su unidad no está en el género literario, ni en un solo autor, sino en la acción de Dios que inspira y conduce. Compuesta por el Antiguo y el Nuevo Testamento, es Palabra de Dios mediada por palabras humanas, y constituye el fundamento teológico de la fe cristiana, interpretada a la luz del Espíritu y la Tradición viva de la Iglesia.",
-      "La inspiración bíblica es la acción del Espíritu Santo que impulsa a los autores sagrados a escribir lo que Dios quiere comunicar, sin anular su libertad ni estilo. La revelación, por su parte, es el acto por el cual Dios se da a conocer progresivamente en la historia, culminando en Jesucristo. Ambas realidades están unidas: la Biblia es Palabra inspirada porque comunica la Revelación divina. No es dictado mecánico, sino una sinfonía de voces humanas movidas por Dios para expresar su plan salvífico de manera viva, contextual y progresiva.",
-      "El canon bíblico es el conjunto de libros reconocidos por la comunidad de fe como inspirados por Dios y normativos para la vida cristiana. Su formación fue progresiva: en el judaísmo se consolidó tras el exilio, y en el cristianismo tras siglos de uso litúrgico, discernimiento y consenso eclesial. El canon refleja no solo autoridad doctrinal, sino también la experiencia de encuentro con Dios. La Iglesia católica reconoce 73 libros (46 del AT y 27 del NT), cuya selección responde a criterios de apostolicidad, ortodoxia y uso litúrgico.",
-      "La Biblia está compuesta por diversos géneros literarios: narrativos, legislativos, poéticos, sapienciales, proféticos, apocalípticos, epistolares, entre otros. Cada género tiene un propósito comunicativo y una teología implícita. Por ejemplo, los salmos expresan oración y emoción humana en diálogo con Dios, mientras que las leyes reflejan la organización social y la voluntad divina. Comprender los géneros permite una interpretación adecuada, respetando el contexto, la intención del autor y el modo en que Dios se revela en la historia humana a través del lenguaje y la cultura.",
-      "El Antiguo Testamento surgió en un contexto cultural semita, marcado por influencias de Egipto, Mesopotamia y Canaán. Entender ese entorno permite interpretar símbolos, leyes, relatos y estructuras sociales. Por ejemplo, la creación en Génesis dialoga con cosmogonías babilónicas, y los códigos legales con normas del Cercano Oriente. El éxodo, alianza y monarquía deben comprenderse en relación con el contexto político-religioso de los pueblos vecinos. Así, el mensaje teológico —la iniciativa de Dios que libera y establece una relación de alianza— se enraíza en la historia concreta.",
-      "El Nuevo Testamento nació en un mundo grecorromano, con fuerte presencia del pensamiento judío y helenístico. Jesús vivió en un entorno judío-palestino, influenciado por la ley mosaica, las sinagogas y la espera del Mesías. Los evangelios recogen esta tradición, mientras las cartas paulinas dialogan con el mundo pagano, usando categorías filosóficas y jurídicas romanas. Comprender este contexto ayuda a captar el alcance de la Buena Noticia: la irrupción del Reino en la historia humana, el cumplimiento de las Escrituras y la universalidad de la salvación en Cristo.",
-      "La alianza es el eje teológico que articula toda la Biblia. Desde la alianza con Noé, pasando por Abraham, Moisés y David, hasta la nueva alianza en Cristo, Dios establece con su pueblo una relación basada en la fidelidad y el amor. Esta alianza tiene dimensiones jurídicas, litúrgicas y existenciales. Es una pedagogía divina que revela un Dios comprometido con la historia humana. En Cristo, la alianza se universaliza, se sella con su sangre y abre el camino de comunión definitiva. Leer la Biblia desde la alianza permite captar su unidad profunda."
-    ];
+    let clickTimer;
+    const imagenTito = document.getElementById("imagenTito");
+    const frase1 = document.getElementById("frase1");
+    const frase2 = document.getElementById("frase2");
 
-    const tito = document.getElementById("titoImagen");
-    const titoOriginal = "Tito parado.jpg";
+    const titoParado = "Tito parado.jpg";
     const titoRiendo = "Tito riendo.png";
 
-    tito.addEventListener("click", () => {
-      document.getElementById("titoImagen").src = titoOriginal;
-      document.getElementById("frase").innerText = "";
-      hablar("Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.");
-    });
+    const textos = [
+      "La Biblia es una colección de libros inspirados por Dios que relatan su acción salvífica en la historia. Está dividida en Antiguo y Nuevo Testamento y contiene diversos géneros. Es el testimonio escrito de la revelación progresiva de Dios y fundamento de la fe cristiana.",
+      "Inspiración es la acción del Espíritu Santo que guía a los autores bíblicos. Revelación es la manifestación progresiva de Dios en la historia. Ambas confluyen en la Escritura como Palabra de Dios escrita en lenguaje humano, culminando en Jesucristo.",
+      "El canon bíblico es el conjunto de libros reconocidos por la Iglesia como inspirados. Se formó progresivamente, y su cierre definió los textos normativos. El canon católico incluye 73 libros, seleccionados por su origen apostólico, contenido teológico y uso litúrgico.",
+      "La Biblia emplea diversos géneros: narrativo, legal, poético, profético, sapiencial y apocalíptico. Cada forma literaria transmite el mensaje divino desde contextos culturales e intenciones distintas. Su correcta interpretación requiere conocer el género para captar el sentido teológico.",
+      "El AT refleja culturas del Antiguo Oriente, como Egipto y Mesopotamia. Las leyes, relatos y profecías tienen trasfondo histórico. Conocer ese contexto permite comprender mejor el significado original y cómo Dios actuaba en esos marcos culturales.",
+      "El NT se desarrolla en un mundo judío-helénico. Jesús predica en un contexto judío con tensiones políticas, y los apóstoles evangelizan en el mundo romano. Este trasfondo ilumina la novedad del mensaje cristiano y su encarnación cultural.",
+      "La alianza es el hilo conductor de toda la Biblia. Dios establece pactos con Noé, Abraham, Israel y, finalmente, en Jesús. Esta progresión revela una pedagogía divina que culmina en la nueva alianza eterna en Cristo crucificado y resucitado."
+    ];
 
-    tito.addEventListener("dblclick", () => {
-      document.getElementById("titoImagen").src = titoRiendo;
-      document.getElementById("frase").innerText = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
-      hablar("¡Me haces cosquillas! ¿Quieres hacerme una pregunta?");
+    function hacerClic() {
+      imagenTito.src = titoParado;
+      frase1.innerText = "Hola soy Tito, tu tutor virtual.";
+      frase2.innerText = "Estoy para acompañarte en tu aprendizaje bíblico.";
+      hablar(frase1.innerText + " " + frase2.innerText);
+    }
+
+    function hacerDobleClic() {
+      clearTimeout(clickTimer);
+      imagenTito.src = titoRiendo;
+      frase1.innerText = "¡Me haces cosquillas!";
+      frase2.innerText = "¿Quieres hacerme una pregunta?";
+      hablar(frase1.innerText + " " + frase2.innerText);
       setTimeout(() => {
-        document.getElementById("titoImagen").src = titoOriginal;
-        document.getElementById("frase").innerText = "";
+        hacerClic();
       }, 6000);
-    });
+    }
+
+    function controladorClick() {
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        hacerClic();
+      }, 300);
+    }
 
     function toggleMenu() {
       const menu = document.getElementById("menuBiblia");
@@ -198,34 +169,21 @@
     }
 
     function mostrarTexto(index) {
-      detenerLectura();
-      document.getElementById("pensando").style.display = "block";
-      hablar("Estoy pensando... dame unos segundos.");
-      setTimeout(() => {
-        document.getElementById("pensando").style.display = "none";
-        document.getElementById("explicacion").innerText = textos[index];
-        document.getElementById("titoExplica").style.display = "block";
-        hablar(textos[index]);
-      }, 2500);
+      document.getElementById("explicacion").innerText = textos[index];
+      hablar(textos[index]);
     }
 
     function hablar(texto) {
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(texto);
-        utterance.lang = "es-ES";
-        speechSynthesis.speak(utterance);
-      }
-    }
-
-    function detenerLectura() {
-      speechSynthesis.cancel();
-      document.getElementById("titoExplica").style.display = "none";
-      document.getElementById("pensando").style.display = "none";
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "es-ES";
+      speech.text = texto;
+      window.speechSynthesis.speak(speech);
     }
   </script>
 
 </body>
 </html>
+
 
 
 
