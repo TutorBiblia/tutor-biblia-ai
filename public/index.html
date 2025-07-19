@@ -157,14 +157,35 @@
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
         const temas = [
-          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros sagrados que constituyen la revelación de Dios a la humanidad, redactada en diversos géneros y contextos. [...]' },
-          { titulo: '2. Inspiración y Revelación', contenido: 'La inspiración bíblica es la acción del Espíritu Santo que impulsa a los autores sagrados [...]' },
-          { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la Iglesia. [...]' },
-          { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia emplea múltiples géneros literarios: narrativo, poético, legislativo, [...]' },
-          { titulo: '5. Contexto cultural e histórico del Antiguo Testamento', contenido: 'El Antiguo Testamento se desarrolló en un entorno semita, con influencias mesopotámicas [...]' },
-          { titulo: '6. Contexto cultural e histórico del Nuevo Testamento', contenido: 'El Nuevo Testamento surge en el mundo grecorromano, bajo la ocupación del Imperio Romano. [...]' },
-          { titulo: '7. La alianza como eje transversal', contenido: 'La alianza es el hilo conductor que une toda la Biblia. [...]' }
-        ];
+  {
+    titulo: '1. ¿Qué es la Biblia?',
+    contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo. No es solo palabra humana sobre Dios, sino Palabra de Dios en palabras humanas (DV 12). A través de relatos, leyes, profecías y sabiduría, la Biblia orienta a la humanidad hacia su plenitud en Cristo, culminación de toda la revelación (Heb 1,1–2).'
+  },
+  {
+    titulo: '2. Inspiración y Revelación',
+    contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar. La Sagrada Escritura, entonces, no es dictado, sino fruto de una cooperación divina-humana (DV 11). La inspiración garantiza la verdad salvífica de los textos, y su interpretación exige fe, tradición viva y guía del magisterio para captar el sentido pleno en Cristo.'
+  },
+  {
+    titulo: '3. El canon de la Biblia',
+    contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo. Este discernimiento fue progresivo y dependió del uso litúrgico, la autoridad apostólica y la coherencia teológica con la fe recibida. El canon expresa una tradición viva y normativa: no todo escrito antiguo es Escritura. La autoridad del canon está fundamentada en la acción del Espíritu Santo que guía a la Iglesia (cf. 2 Tim 3,16).'
+  },
+  {
+    titulo: '4. Tipos, géneros y formas literarias',
+    contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma literaria comunica una verdad teológica de modo específico. Por ejemplo, los salmos cantan la fe del pueblo; las parábolas enseñan el Reino con imágenes; los relatos del Éxodo narran salvación con sentido litúrgico y simbólico. Interpretar correctamente implica respetar los géneros, el contexto y la intención del autor inspirado, para descubrir el mensaje revelado con fidelidad (cf. DV 12).'
+  },
+  {
+    titulo: '5. Contexto cultural e histórico del Antiguo Testamento',
+    contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán. Las leyes, símbolos y estructuras sociales muestran influencias compartidas, pero reinterpretadas desde la fe en el Dios único y libertador. La teología del Éxodo, la alianza en el Sinaí y la esperanza mesiánica surgen en contextos de opresión, exilio y restauración. Este trasfondo permite comprender la originalidad de Israel: una fe que se encarna en la historia, marcada por la memoria de la salvación.'
+  },
+  {
+    titulo: '6. Contexto cultural e histórico del Nuevo Testamento',
+    contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas, políticas y sociales. El judaísmo del Segundo Templo estaba dividido en grupos como fariseos, saduceos y esenios, cada uno con expectativas escatológicas. El kerigma cristiano surge como cumplimiento de las promesas del Antiguo Testamento, pero reformula el mesianismo desde la cruz y resurrección. El contexto histórico ilumina el conflicto con las autoridades y la apertura del Evangelio a los gentiles.'
+  },
+  {
+    titulo: '7. La alianza como eje transversal',
+    contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. Iniciada con Noé, particularizada en Abrahán, formalizada en Moisés y renovada en David, la alianza expresa el vínculo entre Dios y su pueblo. Esta relación implica elección, promesa y fidelidad. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre (Lc 22,20). Esta culminación une ley y gracia, justicia y misericordia, y abre la comunión definitiva con Dios. Toda la Biblia se lee a la luz de esta lógica de alianza.'
+  }
+];
         temas.forEach((tema, i) => {
           const id = i + 1;
           menu.innerHTML += `<div>
@@ -210,6 +231,7 @@
 
 </body>
 </html>
+
 
 
 
