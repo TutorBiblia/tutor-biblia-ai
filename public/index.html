@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Tutor Bíblico IA - Tito</title>
   <style>
     body {
@@ -17,22 +17,19 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .presentacion img {
       width: 100px;
       border-radius: 50%;
+      cursor: pointer;
     }
 
     .titulo {
       font-size: 1.6rem;
       font-weight: bold;
       margin-top: 20px;
-    }
-
-    .input-container {
-      margin-top: 15px;
     }
 
     textarea {
@@ -52,7 +49,6 @@
     }
 
     .botones button {
-      flex: 1 1 auto;
       padding: 10px 15px;
       border: none;
       border-radius: 8px;
@@ -105,27 +101,28 @@
       margin-top: 10px;
       width: 100px;
     }
+
+    #pensando {
+      margin-top: 10px;
+      font-style: italic;
+      color: #666;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Presentación de Tito -->
   <div class="presentacion">
-    <img src="Tito parado.jpg" alt="Tito parado">
+    <img id="titoImagen" src="Tito parado.jpg" alt="Tito">
     <div>
       <p><strong>Hola soy Tito, tu tutor virtual.</strong><br>Estoy para acompañarte en tu aprendizaje bíblico.</p>
     </div>
   </div>
 
-  <!-- Título -->
   <h2 class="titulo">📖 Tutor Bíblico IA</h2>
 
-  <!-- Área de entrada -->
-  <div class="input-container">
-    <textarea placeholder="Escribe tu pregunta aquí..."></textarea>
-  </div>
+  <textarea placeholder="Escribe tu pregunta aquí..."></textarea>
 
-  <!-- Botones -->
   <div class="botones">
     <button class="azul">Enviar pregunta</button>
     <button class="verde">🎤 Dictar</button>
@@ -133,10 +130,9 @@
     <button onclick="toggleMenu()" class="morado">📖 Aprende la Biblia</button>
   </div>
 
-  <!-- Imagen de Tito explicando -->
+  <p id="pensando">Estoy pensando... dame unos segundos.</p>
   <img id="titoExplica" src="Tito explica.png" alt="Tito explicando">
 
-  <!-- Menú desplegable de temas -->
   <div id="menuBiblia">
     <ul>
       <li onclick="mostrarTexto(0)">1. ¿Qué es la Biblia?</li>
@@ -150,40 +146,34 @@
     <div id="explicacion"></div>
   </div>
 
-  <!-- Respuesta (opcional) -->
-  <div class="input-container">
-    <p><strong>Respuesta:</strong></p>
-    <div id="respuesta" style="background-color:#fff; padding:10px; border-radius:8px; min-height:40px; border:1px solid #ccc;"></div>
-  </div>
-
-  <!-- Script funcional -->
   <script>
     const textos = [
-      "La Biblia es una colección de libros sagrados que relatan la relación entre Dios y la humanidad. Está compuesta por el Antiguo y el Nuevo Testamento.",
-      "La inspiración es la acción del Espíritu Santo en los autores bíblicos. La revelación es Dios dándose a conocer a través de la historia y las Escrituras.",
-      "El canon bíblico es el conjunto de libros reconocidos como auténticos y normativos por la comunidad de fe.",
-      "La Biblia contiene diversos géneros: narrativo, poético, profético, legal, sapiencial, entre otros. Cada uno transmite el mensaje de manera única.",
-      "El Antiguo Testamento debe leerse considerando su contexto cultural: civilizaciones antiguas, ritos, lenguas y costumbres del Cercano Oriente.",
-      "El Nuevo Testamento se ubica en un mundo grecorromano, con fuerte presencia judía. Conocer ese contexto ilumina los dichos y hechos de Jesús y los apóstoles.",
-      "La alianza es un pacto entre Dios y su pueblo. Desde Noé hasta Jesús, la Biblia muestra cómo Dios invita a una relación de fidelidad y amor con la humanidad."
+      "La Biblia es una colección de libros que constituyen la Sagrada Escritura. Es el testimonio escrito de la Revelación divina y narra la historia de la salvación desde la creación hasta la plenitud en Cristo. Su unidad no está en el género literario, ni en un solo autor, sino en la acción de Dios que inspira y conduce. Compuesta por el Antiguo y el Nuevo Testamento, es Palabra de Dios mediada por palabras humanas, y constituye el fundamento teológico de la fe cristiana, interpretada a la luz del Espíritu y la Tradición viva de la Iglesia.",
+      "La inspiración bíblica es la acción del Espíritu Santo que impulsa a los autores sagrados a escribir lo que Dios quiere comunicar, sin anular su libertad ni estilo. La revelación, por su parte, es el acto por el cual Dios se da a conocer progresivamente en la historia, culminando en Jesucristo. Ambas realidades están unidas: la Biblia es Palabra inspirada porque comunica la Revelación divina. No es dictado mecánico, sino una sinfonía de voces humanas movidas por Dios para expresar su plan salvífico de manera viva, contextual y progresiva.",
+      "El canon bíblico es el conjunto de libros reconocidos por la comunidad de fe como inspirados por Dios y normativos para la vida cristiana. Su formación fue progresiva: en el judaísmo se consolidó tras el exilio, y en el cristianismo tras siglos de uso litúrgico, discernimiento y consenso eclesial. El canon refleja no solo autoridad doctrinal, sino también la experiencia de encuentro con Dios. La Iglesia católica reconoce 73 libros (46 del AT y 27 del NT), cuya selección responde a criterios de apostolicidad, ortodoxia y uso litúrgico.",
+      "La Biblia está compuesta por diversos géneros literarios: narrativos, legislativos, poéticos, sapienciales, proféticos, apocalípticos, epistolares, entre otros. Cada género tiene un propósito comunicativo y una teología implícita. Por ejemplo, los salmos expresan oración y emoción humana en diálogo con Dios, mientras que las leyes reflejan la organización social y la voluntad divina. Comprender los géneros permite una interpretación adecuada, respetando el contexto, la intención del autor y el modo en que Dios se revela en la historia humana a través del lenguaje y la cultura.",
+      "El Antiguo Testamento surgió en un contexto cultural semita, marcado por influencias de Egipto, Mesopotamia y Canaán. Entender ese entorno permite interpretar símbolos, leyes, relatos y estructuras sociales. Por ejemplo, la creación en Génesis dialoga con cosmogonías babilónicas, y los códigos legales con normas del Cercano Oriente. El éxodo, alianza y monarquía deben comprenderse en relación con el contexto político-religioso de los pueblos vecinos. Así, el mensaje teológico —la iniciativa de Dios que libera y establece una relación de alianza— se enraíza en la historia concreta.",
+      "El Nuevo Testamento nació en un mundo grecorromano, con fuerte presencia del pensamiento judío y helenístico. Jesús vivió en un entorno judío-palestino, influenciado por la ley mosaica, las sinagogas y la espera del Mesías. Los evangelios recogen esta tradición, mientras las cartas paulinas dialogan con el mundo pagano, usando categorías filosóficas y jurídicas romanas. Comprender este contexto ayuda a captar el alcance de la Buena Noticia: la irrupción del Reino en la historia humana, el cumplimiento de las Escrituras y la universalidad de la salvación en Cristo.",
+      "La alianza es el eje teológico que articula toda la Biblia. Desde la alianza con Noé, pasando por Abraham, Moisés y David, hasta la nueva alianza en Cristo, Dios establece con su pueblo una relación basada en la fidelidad y el amor. Esta alianza tiene dimensiones jurídicas, litúrgicas y existenciales. Es una pedagogía divina que revela un Dios comprometido con la historia humana. En Cristo, la alianza se universaliza, se sella con su sangre y abre el camino de comunión definitiva. Leer la Biblia desde la alianza permite captar su unidad profunda."
     ];
 
     let currentUtterance = null;
 
     function toggleMenu() {
       const menu = document.getElementById("menuBiblia");
-      const img = document.getElementById("titoExplica");
-      const isOpen = menu.style.display === "block";
-      menu.style.display = isOpen ? "none" : "block";
-      img.style.display = isOpen ? "none" : "block";
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
 
     function mostrarTexto(index) {
       detenerLectura();
-      const text = textos[index];
-      document.getElementById("explicacion").innerText = text;
-      document.getElementById("titoExplica").style.display = "block";
-      hablar(text);
+      document.getElementById("pensando").style.display = "block";
+      hablar("Estoy pensando... dame unos segundos.");
+      setTimeout(() => {
+        document.getElementById("pensando").style.display = "none";
+        document.getElementById("explicacion").innerText = textos[index];
+        document.getElementById("titoExplica").style.display = "block";
+        hablar(textos[index]);
+      }, 2500);
     }
 
     function hablar(texto) {
@@ -199,11 +189,23 @@
         speechSynthesis.cancel();
       }
       document.getElementById("titoExplica").style.display = "none";
+      document.getElementById("pensando").style.display = "none";
     }
+
+    // Interacciones con Tito
+    const tito = document.getElementById("titoImagen");
+    tito.addEventListener("click", () => {
+      hablar("Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.");
+    });
+
+    tito.addEventListener("dblclick", () => {
+      hablar("¡Me haces cosquillas! ¿Quieres hacerme una pregunta?");
+    });
   </script>
 
 </body>
 </html>
+
 
 
 
