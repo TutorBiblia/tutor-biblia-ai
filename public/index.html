@@ -48,6 +48,8 @@
   </style>
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
+
+  <!-- Presentación de Tito -->
   <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
       onclick="presentarseTito()" ondblclick="titoBromea()"
@@ -57,6 +59,7 @@
       Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
     </p>
   </div>
+
   <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
 
   <!-- Entrada de texto -->
@@ -78,148 +81,36 @@
   <!-- Botón y menú de Biblia -->
   <button onclick="toggleMenu()" style="background-color: #8e44ad; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia" style="display: none; margin-top: 1rem;"></div>
+
   <script>
-    const consejosBiblicos = [
-      "Confía en el Señor con todo tu corazón (Prov 3,5).",
-      "No temas, porque yo estoy contigo (Is 41,10).",
-      "Ama a tu prójimo como a ti mismo (Mt 22,39).",
-      "Busca primero el Reino de Dios (Mt 6,33).",
-      "El Señor es mi pastor, nada me falta (Sal 23,1).",
-      "Perdona, como Dios te ha perdonado (Col 3,13).",
-      "Sé fuerte y valiente (Jos 1,9).",
-      "La fe mueve montañas (Mt 17,20).",
-      "Ora sin cesar (1 Tes 5,17).",
-      "El amor nunca falla (1 Cor 13,8)."
+    const temas = [
+      { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo.' },
+      { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar.' },
+      { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo.' },
+      { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma comunica una verdad teológica de modo específico.' },
+      { titulo: '5. Contexto cultural e histórico del AT', contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán.' },
+      { titulo: '6. Contexto cultural e histórico del NT', contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas y sociales.' },
+      { titulo: '7. La alianza como eje transversal', contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre (Lc 22,20).' }
     ];
-
-    let indiceConsejo = 0;
-    let clickCount = 0;
-    let tripleClickTimer;
-
-    document.getElementById("tito-img").addEventListener("click", () => {
-      clickCount++;
-      clearTimeout(tripleClickTimer);
-      tripleClickTimer = setTimeout(() => clickCount = 0, 500);
-      if (clickCount === 3) {
-        mostrarConsejo();
-        clickCount = 0;
-      }
-    });
-
-    function mostrarConsejo() {
-      const globo = document.getElementById("globo-tito");
-      globo.textContent = consejosBiblicos[indiceConsejo];
-      indiceConsejo = (indiceConsejo + 1) % consejosBiblicos.length;
-      const titoImg = document.getElementById("tito-img");
-      const globoWidth = globo.offsetWidth;
-      const leftPos = titoImg.offsetLeft + 130;
-      const maxLeft = window.innerWidth - globoWidth - 20;
-      globo.style.left = `${Math.min(leftPos, maxLeft)}px`;
-      globo.style.top = `${titoImg.offsetTop - 100}px`;
-      globo.style.display = "block";
-      hablar(globo.textContent);
-      setTimeout(() => {
-        globo.style.display = "none";
-      }, 6000);
-    }
-
-    async function enviarMensaje() {
-      const mensaje = document.getElementById('input').value;
-      const respuestaDiv = document.getElementById('respuesta');
-      const cargando = document.getElementById('cargando');
-      const imgTito = document.getElementById("tito-img");
-      const presentacionTexto = document.getElementById("presentacion-texto");
-      cargando.style.display = 'block';
-      respuestaDiv.textContent = '';
-      detenerVoz();
-      imgTito.src = "Tito pensando.jpg";
-      imgTito.classList.add("thinking");
-      presentacionTexto.textContent = "Estoy pensando... dame unos segundos.";
-      hablar("Estoy pensando... dame unos segundos.");
-      try {
-        const res = await fetch('/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: mensaje })
-        });
-        const data = await res.json();
-        const respuesta = data.reply;
-        const emoji = clasificarEmoji(respuesta);
-        const final = `${emoji} ${respuesta}`;
-        respuestaDiv.textContent = final;
-        imgTito.src = "Tito explica.png";
-        presentacionTexto.textContent = "Presta atención";
-        hablar(respuesta);
-      } catch (error) {
-        respuestaDiv.textContent = '⚠️ Error al conectar con el servidor.';
-        console.error(error);
-      } finally {
-        cargando.style.display = 'none';
-        imgTito.classList.remove("thinking");
-      }
-    }
-
-    function reconocerVoz() {
-      if (!('webkitSpeechRecognition' in window)) {
-        alert('Tu navegador no soporta reconocimiento de voz.');
-        return;
-      }
-      const recognition = new webkitSpeechRecognition();
-      recognition.lang = 'es-PE';
-      recognition.onstart = () => document.getElementById('input').placeholder = '🎙️ Escuchando...';
-      recognition.onresult = (event) => {
-        document.getElementById('input').value = event.results[0][0].transcript;
-        document.getElementById('input').placeholder = 'Escribe tu pregunta aquí...';
-      };
-      recognition.onerror = () => alert('Error al reconocer la voz.');
-      recognition.start();
-    }
-
-    function hablar(texto) {
-      speechSynthesis.cancel();
-      const mensaje = new SpeechSynthesisUtterance(texto);
-      mensaje.lang = 'es-PE';
-      speechSynthesis.speak(mensaje);
-    }
-
-    function detenerVoz() {
-      speechSynthesis.cancel();
-    }
-
-    function clasificarEmoji(texto) {
-      const lower = texto.toLowerCase();
-      if (lower.includes("bien") || lower.includes("alegría") || lower.includes("esperanza")) return "😊";
-      if (lower.includes("no se puede") || lower.includes("triste") || lower.includes("dificultad")) return "😔";
-      if (lower.includes("advertencia") || lower.includes("cuidado")) return "⚠️";
-      if (lower.includes("cristo") || lower.includes("dios")) return "✝️";
-      return "💬";
-    }
-
-    function presentarseTito() {
-      const saludo = "Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      document.getElementById("presentacion-texto").textContent = saludo;
-      hablar(saludo);
-    }
-
-    function titoBromea() {
-      const imgTito = document.getElementById("tito-img");
-      const presentacionTexto = document.getElementById("presentacion-texto");
-      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
-      imgTito.src = "Tito riendo.png";
-      presentacionTexto.textContent = mensaje;
-      hablar(mensaje);
-      setTimeout(() => {
-        imgTito.src = "Tito parado.jpg";
-        presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      }, 6000);
-    }
 
     function toggleMenu() {
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
-        menu.innerHTML = "<p>Aquí irían los temas bíblicos...</p>"; // Puedes insertar tus temas aquí.
+        temas.forEach((tema, i) => {
+          menu.innerHTML += `<div>
+            <button onclick="toggleContenido(${i})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
+            <div id="contenido${i}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
+          </div>`;
+        });
       }
       menu.style.display = menu.style.display === "none" ? "block" : "none";
+    }
+
+    function toggleContenido(index) {
+      const contenido = document.getElementById(`contenido${index}`);
+      const todos = document.querySelectorAll(".acordeon-contenido");
+      todos.forEach(div => div.classList.remove("activo"));
+      contenido.classList.toggle("activo");
     }
   </script>
 </body>
