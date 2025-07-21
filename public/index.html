@@ -9,9 +9,9 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #fef9f4;
       color: #2d3436;
-      max-width: 700px;
+      max-width: 650px;
       margin: auto;
-      padding: 1.5rem;
+      padding: 2rem;
     }
     .card {
       background-color: #f5f8fa;
@@ -19,14 +19,12 @@
       padding: 20px;
       box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
       margin-bottom: 20px;
-      display: flex;
-      align-items: center;
     }
     #tito-img {
       cursor: pointer;
-      width: 100px;
+      width: 120px;
       border-radius: 50%;
-      margin-right: 15px;
+      margin-right: 20px;
       transition: transform 0.3s ease;
     }
     #globo-tito {
@@ -40,45 +38,37 @@
       box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
       z-index: 10;
       font-size: 1rem;
-      left: 130px;
-      top: 0;
+      left: -310px;
+      top: 20px;
     }
     #globo-tito::after {
       content: "";
       position: absolute;
       top: 20px;
-      left: -20px;
+      right: -20px;
       border-width: 10px;
       border-style: solid;
-      border-color: transparent #3498db transparent transparent;
+      border-color: transparent transparent transparent #3498db;
     }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+    .btn-enviar { background-color: #3498db; color: white; }
+    .btn-dictar { background-color: #27ae60; color: white; }
+    .btn-detener { background-color: #e74c3c; color: white; }
     textarea {
       width: 100%;
       height: 100px;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid #ccc;
       margin-bottom: 10px;
-      font-size: 1rem;
-    }
-    .btn {
-      padding: 12px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      margin: 6px 6px 6px 0;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .btn-enviar { background-color: #3498db; }
-    .btn-dictar { background-color: #2ecc71; }
-    .btn-detener { background-color: #e74c3c; }
-    #respuesta {
-      background: #f0f3f5;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
     }
     #menu-biblia button {
       background-color: #3498db;
@@ -103,24 +93,24 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito" ondblclick="titoBromea()" onclick="titoClickHandler()">
-    <div id="globo-tito" role="tooltip"></div>
-    <p id="presentacion-texto"><strong>Hola soy Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
+  <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+    <div id="globo-tito"></div>
+    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+         ondblclick="titoBromea()" onclick="titoClickHandler()" />
+    <p id="presentacion-texto">
+      Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
+    </p>
   </div>
 
   <h1>📖 Tutor Bíblico IA</h1>
-
-  <textarea id="pregunta" placeholder="Escribe tu pregunta aquí..."></textarea>
-  <br>
-  <button class="btn btn-enviar" onclick="enviarPregunta()">Enviar pregunta</button>
-  <button class="btn btn-dictar" onclick="iniciarDictado()">🎤 Dictar</button>
-  <button class="btn btn-detener" onclick="detenerVoz()">⏹️ Detener voz</button>
-
+  <textarea id="pregunta" placeholder="Escribe tu pregunta aquí..."></textarea><br>
+  <button class="btn-enviar" onclick="enviarPregunta()">Enviar pregunta</button>
+  <button class="btn-dictar" onclick="iniciarDictado()">🎤 Dictar</button>
+  <button class="btn-detener" onclick="detenerVoz()">⏹️ Detener voz</button>
   <h3>Respuesta:</h3>
-  <div id="respuesta"></div>
+  <div id="respuesta" style="background-color: #f5f5f5; padding: 10px; border-radius: 8px;"></div>
 
-  <button class="btn btn-enviar" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
+  <button onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia"></div>
 
   <script>
@@ -128,14 +118,9 @@
     const globo = document.getElementById("globo-tito");
     const consejos = [
       "Confía en el Señor con todo tu corazón (Proverbios 3,5).",
-      "No temas, porque yo estoy contigo (Isaías 41,10).",
       "Ama a tu prójimo como a ti mismo (Mateo 22,39).",
       "Busca primero el Reino de Dios (Mateo 6,33).",
-      "Sé constante en la oración (Romanos 12,12).",
-      "Dios es nuestro refugio y fortaleza (Salmo 46,1).",
       "Todo lo puedo en Cristo que me fortalece (Filipenses 4,13).",
-      "Perdona setenta veces siete (Mateo 18,22).",
-      "El Señor es mi pastor, nada me falta (Salmo 23,1).",
       "Bienaventurados los que tienen hambre de justicia (Mateo 5,6)."
     ];
     let consejoIndex = 0;
@@ -163,13 +148,13 @@
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
         const temas = [
-          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que narran la historia de la salvación... culminación de toda la revelación en Cristo.' },
-          { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es Dios dándose a conocer... la interpretación exige fe y guía del magisterio.' },
-          { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico comprende 46 libros AT y 27 NT... discernimiento guiado por el Espíritu.' },
-          { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia contiene poesía, leyes, narraciones, apocalíptica... cada forma comunica la verdad teológica.' },
-          { titulo: '5. Contexto del AT', contenido: 'Influencia de Egipto, Mesopotamia, Canaán... reinterpretadas desde la fe en el Dios único.' },
-          { titulo: '6. Contexto del NT', contenido: 'Jesús en Palestina helenizada... mesianismo reformulado desde la cruz y resurrección.' },
-          { titulo: '7. La alianza como eje bíblico', contenido: 'Desde Noé hasta Cristo, la alianza es vínculo... culmina en la nueva y eterna alianza en Jesús.' }
+          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es la Sagrada Escritura que narra la historia de la salvación. Inspirada por Dios, contiene libros que revelan su voluntad desde la creación hasta la plenitud de la revelación en Cristo. Es Palabra de Dios en lenguaje humano y norma de vida para el creyente.' },
+          { titulo: '2. Inspiración y Revelación', contenido: 'La inspiración es la acción del Espíritu Santo que mueve a los autores a escribir lo que Dios quiere. La revelación es la iniciativa divina por la cual Dios se da a conocer progresivamente en la historia, culminando en Jesucristo, Palabra hecha carne.' },
+          { titulo: '3. El canon de la Biblia', contenido: 'El canon es el conjunto de libros reconocidos como inspirados por la Iglesia. En el catolicismo, el Antiguo Testamento consta de 46 libros y el Nuevo de 27. Este canon fue definido en el siglo IV, discernido por la tradición apostólica y guiado por el Espíritu Santo.' },
+          { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia no es un libro uniforme, sino una biblioteca con diversos géneros: narración, poesía, ley, sabiduría, profecía, evangelio y apocalíptica. Cada forma literaria comunica la verdad divina adaptada a la cultura y contexto del pueblo de Dios.' },
+          { titulo: '5. Contexto del AT', contenido: 'El Antiguo Testamento se desarrolló en un ambiente de influencias culturales como Egipto, Canaán y Babilonia. Sin embargo, Israel interpretó su historia a la luz de la fe en Yahveh, como el Dios que libera, establece alianzas y revela su justicia a través de la ley y los profetas.' },
+          { titulo: '6. Contexto del NT', contenido: 'Jesús nace bajo el dominio romano en una Palestina marcada por tensiones religiosas, sociales y culturales. El mundo helenístico influyó en la transmisión del evangelio. El NT refleja esta diversidad al proclamar a Cristo como cumplimiento de las promesas y salvador universal.' },
+          { titulo: '7. La alianza como eje bíblico', contenido: 'Desde la alianza con Noé hasta la nueva alianza en Cristo, la relación entre Dios e Israel se expresa como pacto. Es un vínculo que une fidelidad, elección y promesa. Jesús instituye la alianza eterna en su sangre, centro de la fe cristiana.' }
         ];
         temas.forEach((tema, i) => {
           const id = i + 1;
