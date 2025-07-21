@@ -5,6 +5,14 @@
   <title>Tutor Bíblico Tito</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 850px;
+      margin: auto;
+      padding: 2rem;
+      background-color: #fef9f4;
+      color: #2d3436;
+    }
     .thinking {
       animation: shake 0.6s infinite;
     }
@@ -21,41 +29,49 @@
       transition: max-height 0.4s ease, padding 0.4s ease;
     }
     .acordeon-contenido.activo {
-      max-height: 1000px;
+      max-height: 500px;
       padding: 10px;
     }
     @keyframes aparecer {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+    .boton-biblia {
+      background-color: purple;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .menu-subtemas {
+      display: none;
+      margin-top: 10px;
+      background-color: #f0e6f6;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .menu-subtemas button {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
-
+<body>
   <!-- Presentación de Tito con globo al costado -->
   <div id="contenedor-tito" style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
-      onclick="presentarseTito(); contarClics()" ondblclick="titoBromea()"
-      style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
-    <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
+    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito" onclick="presentarseTito(); contarClics()" ondblclick="titoBromea()" style="cursor: pointer; width: 140px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
+    <p id="presentacion-texto" style="font-size: 1.4rem; font-weight: 500;">
       Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
     </p>
-    <div id="globo-consejo" style="
-      display: none;
-      position: absolute;
-      top: -10px;
-      left: 140px;
-      max-width: 250px;
-      background: #ecf0f1;
-      border-left: 6px solid #3498db;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-      padding: 15px 15px 10px;
-      font-size: 1rem;
-      color: #2c3e50;
-      z-index: 10;
-      animation: aparecer 0.5s ease-in-out;
-    ">
+    <div id="globo-consejo" style="display: none; position: absolute; top: -10px; left: 160px; max-width: 280px; background: #ecf0f1; border-left: 6px solid #3498db; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.2); padding: 15px 15px 10px; font-size: 1rem; color: #2c3e50; z-index: 10; animation: aparecer 0.5s ease-in-out;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <strong>🗨 Consejo bíblico</strong>
         <button onclick="cerrarConsejo()" style="background: none; border: none; font-size: 1rem; cursor: pointer;">❌</button>
@@ -64,18 +80,27 @@
     </div>
   </div>
 
-  <textarea id="input" placeholder="Escribe tu pregunta aquí..." style="width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;"></textarea>
+  <textarea id="input" placeholder="Escribe tu pregunta aquí..." style="width: 100%; padding: 12px; font-size: 1.2rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;"></textarea>
   <div>
     <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">Enviar pregunta</button>
     <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">🎤 Dictar</button>
     <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">⏹ Detener voz</button>
   </div>
+
   <p style="font-weight: bold; margin-top: 20px;">Respuesta:</p>
   <div id="respuesta" style="background: #ecf0f1; padding: 10px; border-radius: 6px; min-height: 60px;"></div>
 
   <div style="margin-top: 20px;">
-    <button onclick="toggleMenu()" style="background-color: purple; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%;">📘 Aprende sobre la Biblia</button>
-    <div id="menu-biblia" style="margin-top: 10px;"></div>
+    <button class="boton-biblia" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
+    <div id="menu-biblia" class="menu-subtemas">
+      <button>📖 Tema 1: Creación y propósito</button>
+      <button>🌍 Tema 2: Historia de Israel</button>
+      <button>✝️ Tema 3: Jesús y el Reino</button>
+      <button>🕊 Tema 4: Espíritu y misión</button>
+      <button>📜 Tema 5: Biblia y liturgia</button>
+      <button>❤️ Tema 6: Ética y comunidad</button>
+      <button>🌟 Tema 7: Esperanza escatológica</button>
+    </div>
   </div>
 
 <script>
@@ -144,57 +169,7 @@ function titoBromea() {
 }
 function toggleMenu() {
   const menu = document.getElementById("menu-biblia");
-  if (menu.innerHTML === "") {
-    const temas = [
-      { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica...' },
-      { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia...' },
-      { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe...' },
-      { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía...' },
-      { titulo: '5. Contexto cultural e histórico del AT', contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente...' },
-      { titulo: '6. Contexto cultural e histórico del NT', contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano...' },
-      { titulo: '7. La alianza como eje transversal', contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis...' }
-    ];
-    temas.forEach((tema, i) => {
-      const id = i + 1;
-      menu.innerHTML += `<div>
-        <button onclick="toggleContenido(${id})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
-        <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
-      </div>`;
-    });
-  }
-  menu.style.display = menu.style.display === "none" ? "block" : "none";
-}
-function toggleContenido(num) {
-  const contenido = document.getElementById(`contenido${num}`);
-  const titoImg = document.getElementById("tito-img");
-  const presentacionTexto = document.getElementById("presentacion-texto");
-  if (!contenido.classList.contains("activo")) {
-    document.querySelectorAll(".acordeon-contenido").forEach(div => div.classList.remove("activo"));
-    contenido.classList.add("activo");
-    const texto = contenido.textContent.trim();
-    detenerVoz();
-    titoImg.src = "Tito explica.png";
-    presentacionTexto.textContent = "Presta atención";
-    hablarConCallback(texto, () => {
-      titoImg.src = "Tito parado.jpg";
-      presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-    });
-  } else {
-    contenido.classList.remove("activo");
-    detenerVoz();
-    titoImg.src = "Tito parado.jpg";
-    presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-  }
-}
-function hablarConCallback(texto, callback) {
-  speechSynthesis.cancel();
-  const mensaje = new SpeechSynthesisUtterance(texto);
-  mensaje.lang = 'es-PE';
-  mensaje.onend = callback;
-  speechSynthesis.speak(mensaje);
-}
-function detenerVoz() {
-  speechSynthesis.cancel();
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 setInterval(mostrarConsejo, 60000);
 </script>
