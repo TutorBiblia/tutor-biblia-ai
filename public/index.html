@@ -9,27 +9,26 @@
       font-family: 'Segoe UI', sans-serif;
       background-color: #fef9f4;
       color: #2d3436;
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
-      padding: 2rem;
+      padding: 1.5rem;
     }
-
     .card {
       background-color: #f5f8fa;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
       margin-bottom: 20px;
+      display: flex;
+      align-items: center;
     }
-
     #tito-img {
       cursor: pointer;
-      width: 120px;
+      width: 100px;
       border-radius: 50%;
-      margin-right: 20px;
+      margin-right: 15px;
       transition: transform 0.3s ease;
     }
-
     #globo-tito {
       display: none;
       position: absolute;
@@ -44,7 +43,6 @@
       left: 130px;
       top: 0;
     }
-
     #globo-tito::after {
       content: "";
       position: absolute;
@@ -54,61 +52,50 @@
       border-style: solid;
       border-color: transparent #3498db transparent transparent;
     }
-
     textarea {
       width: 100%;
       height: 100px;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
+      margin-bottom: 10px;
       font-size: 1rem;
-      cursor: pointer;
-      margin: 6px 6px 6px 0;
-      box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
-
-    .btn-enviar { background-color: #3498db; color: white; }
-    .btn-dictar { background-color: #2ecc71; color: white; }
-    .btn-detener { background-color: #e74c3c; color: white; }
-
-    #respuesta {
-      background-color: #f5f5f5;
-      padding: 15px;
-      border-radius: 10px;
-      min-height: 60px;
-      margin-bottom: 20px;
-    }
-
-    #menu-biblia button {
-      background-color: #2980b9;
-      color: white;
-      width: 100%;
-      padding: 12px;
+    .btn {
+      padding: 12px 20px;
       font-size: 1rem;
-      margin-bottom: 8px;
       border: none;
       border-radius: 8px;
+      color: white;
+      margin: 6px 6px 6px 0;
       cursor: pointer;
-      text-align: left;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-
+    .btn-enviar { background-color: #3498db; }
+    .btn-dictar { background-color: #2ecc71; }
+    .btn-detener { background-color: #e74c3c; }
+    #respuesta {
+      background: #f0f3f5;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    #menu-biblia button {
+      background-color: #3498db;
+      color: white;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      text-align: left;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
     .acordeon-contenido {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease, padding 0.4s ease;
     }
-
     .acordeon-contenido.activo {
       max-height: 500px;
       padding: 10px;
@@ -116,28 +103,24 @@
   </style>
 </head>
 <body>
-  <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
-         ondblclick="titoBromea()" onclick="titoClickHandler()"
-         style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px;">
+  <div class="card">
+    <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito" ondblclick="titoBromea()" onclick="titoClickHandler()">
     <div id="globo-tito" role="tooltip"></div>
-    <p id="presentacion-texto">
-      Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
-    </p>
+    <p id="presentacion-texto"><strong>Hola soy Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.</p>
   </div>
 
   <h1>📖 Tutor Bíblico IA</h1>
 
-  <textarea id="pregunta" rows="4" placeholder="Escribe tu pregunta aquí..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
-  <br><br>
-  <button onclick="enviarPregunta()">Enviar pregunta</button>
-  <button onclick="iniciarDictado()">🎤 Dictar</button>
-  <button onclick="detenerVoz()">⏹️ Detener voz</button>
+  <textarea id="pregunta" placeholder="Escribe tu pregunta aquí..."></textarea>
+  <br>
+  <button class="btn btn-enviar" onclick="enviarPregunta()">Enviar pregunta</button>
+  <button class="btn btn-dictar" onclick="iniciarDictado()">🎤 Dictar</button>
+  <button class="btn btn-detener" onclick="detenerVoz()">⏹️ Detener voz</button>
 
   <h3>Respuesta:</h3>
-  <div id="respuesta" style="background-color: #f5f5f5; padding: 10px; border-radius: 8px;"></div>
+  <div id="respuesta"></div>
 
-  <button onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
+  <button class="btn btn-enviar" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia"></div>
 
   <script>
@@ -180,8 +163,8 @@
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
         const temas = [
-          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados... culminación de toda la revelación en Cristo.' },
-          { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es Dios dándose a conocer... interpretación exige fe y guía del magisterio.' },
+          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que narran la historia de la salvación... culminación de toda la revelación en Cristo.' },
+          { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es Dios dándose a conocer... la interpretación exige fe y guía del magisterio.' },
           { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico comprende 46 libros AT y 27 NT... discernimiento guiado por el Espíritu.' },
           { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia contiene poesía, leyes, narraciones, apocalíptica... cada forma comunica la verdad teológica.' },
           { titulo: '5. Contexto del AT', contenido: 'Influencia de Egipto, Mesopotamia, Canaán... reinterpretadas desde la fe en el Dios único.' },
@@ -192,7 +175,7 @@
           const id = i + 1;
           menu.innerHTML += `
             <div>
-              <button onclick="toggleContenido(${id})" style="width:100%;padding:10px;margin:5px;background:#3498db;color:#fff;border:none;border-radius:6px;">${tema.titulo}</button>
+              <button onclick="toggleContenido(${id})">${tema.titulo}</button>
               <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
             </div>
           `;
@@ -269,7 +252,6 @@
   </script>
 </body>
 </html>
-
 
 
 
