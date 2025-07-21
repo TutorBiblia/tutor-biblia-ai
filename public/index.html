@@ -40,7 +40,6 @@
     <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
       Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
     </p>
-    <!-- Globo al costado -->
     <div id="globo-consejo" style="
       display: none;
       position: absolute;
@@ -65,6 +64,20 @@
     </div>
   </div>
 
+  <textarea id="input" placeholder="Escribe tu pregunta aquí..." style="width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;"></textarea>
+  <div>
+    <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">Enviar pregunta</button>
+    <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">🎤 Dictar</button>
+    <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">⏹ Detener voz</button>
+  </div>
+  <p style="font-weight: bold; margin-top: 20px;">Respuesta:</p>
+  <div id="respuesta" style="background: #ecf0f1; padding: 10px; border-radius: 6px; min-height: 60px;"></div>
+
+  <div style="margin-top: 20px;">
+    <button onclick="toggleMenu()" style="background-color: purple; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">📘 Aprende sobre la Biblia</button>
+    <div id="menu-biblia" style="margin-top: 10px;"></div>
+  </div>
+
 <script>
 const consejosBiblicos = [
   { texto: "Confía en el Señor con todo tu corazón (Prov 3,5).", color: "#2980b9" },
@@ -76,11 +89,7 @@ const consejosBiblicos = [
   { texto: "Haz el bien, busca la paz y síguela (Sal 34,15).", color: "#27ae60" },
   { texto: "Todo lo puedo en Cristo que me fortalece (Flp 4,13).", color: "#34495e" }
 ];
-
-let globoTimeout;
-let clics = 0;
-let timerTripleClick = null;
-
+let globoTimeout, clics = 0, timerTripleClick = null;
 function mostrarConsejo() {
   const globo = document.getElementById("globo-consejo");
   const texto = document.getElementById("texto-consejo");
@@ -94,20 +103,17 @@ function mostrarConsejo() {
   clearTimeout(globoTimeout);
   globoTimeout = setTimeout(() => { globo.style.display = "none"; }, 12000);
 }
-
 function cerrarConsejo() {
   const globo = document.getElementById("globo-consejo");
   globo.style.display = "none";
   clearTimeout(globoTimeout);
 }
-
 function hablar(texto) {
   speechSynthesis.cancel();
   const mensaje = new SpeechSynthesisUtterance(texto);
   mensaje.lang = 'es-PE';
   speechSynthesis.speak(mensaje);
 }
-
 function contarClics() {
   clics++;
   if (clics === 3) {
@@ -119,13 +125,11 @@ function contarClics() {
     timerTripleClick = setTimeout(() => { clics = 0; }, 600);
   }
 }
-
 function presentarseTito() {
   const saludo = "Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
   document.getElementById("presentacion-texto").textContent = saludo;
   hablar(saludo);
 }
-
 function titoBromea() {
   const imgTito = document.getElementById("tito-img");
   const presentacionTexto = document.getElementById("presentacion-texto");
@@ -138,7 +142,6 @@ function titoBromea() {
     presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
   }, 6000);
 }
-
 setInterval(mostrarConsejo, 60000);
 </script>
 </body>
