@@ -97,38 +97,28 @@
 
   <img id="tito-explica" src="Tito explicando.png" alt="Tito explicando">
 
-  <div style="margin-top: 20px;">
+   <div style="margin-top: 20px;">
     <button class="boton-biblia" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
-    <div id="menu-biblia" class="menu-subtemas">
-      <button onclick="mostrarSubtema(0)">📖 Tema 1: Creación y propósito</button>
-      <button onclick="mostrarSubtema(1)">🌍 Tema 2: Historia de Israel</button>
-      <button onclick="mostrarSubtema(2)">✝️ Tema 3: Jesús y el Reino</button>
-      <button onclick="mostrarSubtema(3)">🕊 Tema 4: Espíritu y misión</button>
-      <button onclick="mostrarSubtema(4)">📜 Tema 5: Biblia y liturgia</button>
-      <button onclick="mostrarSubtema(5)">❤️ Tema 6: Ética y comunidad</button>
-      <button onclick="mostrarSubtema(6)">🌟 Tema 7: Esperanza escatológica</button>
+    <div id="menu-biblia" style="display: none; margin-top: 10px;">
+      <button onclick="mostrarSubtema(0)">📖 1. ¿Qué es la Biblia?</button>
+      <button onclick="mostrarSubtema(1)">🕊 2. Inspiración y revelación</button>
+      <button onclick="mostrarSubtema(2)">📚 3. El canon bíblico</button>
+      <button onclick="mostrarSubtema(3)">🏺 4. Contexto del Antiguo Testamento</button>
+      <button onclick="mostrarSubtema(4)">🕍 5. Contexto del Nuevo Testamento</button>
+      <button onclick="mostrarSubtema(5)">✍️ 6. Géneros y formas literarias</button>
+      <button onclick="mostrarSubtema(6)">🤝 7. La Alianza como eje transversal</button>
     </div>
   </div>
 
 <script>
-const consejosBiblicos = [
-  { texto: "Confía en el Señor con todo tu corazón (Prov 3,5).", color: "#2980b9" },
-  { texto: "Tu palabra es lámpara para mis pasos (Sal 119,105).", color: "#8e44ad" },
-  { texto: "No temas, porque yo estoy contigo (Is 41,10).", color: "#c0392b" },
-  { texto: "El que cree en mí, aunque muera, vivirá (Jn 11,25).", color: "#16a085" },
-  { texto: "Bienaventurados los limpios de corazón (Mt 5,8).", color: "#f39c12" },
-  { texto: "Perdona, como también tú has sido perdonado (Col 3,13).", color: "#d35400" },
-  { texto: "Haz el bien, busca la paz y síguela (Sal 34,15).", color: "#27ae60" },
-  { texto: "Todo lo puedo en Cristo que me fortalece (Flp 4,13).", color: "#34495e" }
-];
-const subtemasBiblicos = [
-  "Dios crea con sabiduría, amor y propósito. El ser humano es imagen suya, llamado a vivir en comunión, responsabilidad y libertad ante la creación. (Gn 1-2).",
-  "Israel es el pueblo elegido. Su historia muestra la fidelidad de Dios pese a la infidelidad humana. Patriarcas, Éxodo, alianza y profecía guían su camino. (Gn–Mal).",
-  "Jesús proclama el Reino: justicia, misericordia y verdad. Sus parábolas, milagros y la cruz revelan al Mesías que transforma y salva. (Mt–Lc).",
-  "El Espíritu Santo impulsa a la Iglesia en misión. Es presencia viva de Dios que consuela, enseña y santifica. (Hch–1Cor).",
-  "La liturgia une Escritura y sacramento. En la misa escuchamos y respondemos a la Palabra viva. (Lc 24,13–35).",
-  "La fe se vive en comunidad. El amor, perdón y servicio construyen el Reino aquí y ahora. (Mt 5–7; 1Jn).",
-  "La esperanza cristiana apunta a cielos nuevos y tierra nueva. Cristo resucitado es primicia de la nueva creación. (Ap 21–22)."
+const subtemas = [
+  "La Biblia es la Palabra de Dios escrita por humanos inspirados. Es una biblioteca de libros que narran la historia de la salvación. Contiene distintos géneros y tradiciones, pero un mensaje común: el amor fiel de Dios por su pueblo y su deseo de comunión con él.",
+  "La inspiración bíblica es la acción del Espíritu Santo que guía a los autores humanos para comunicar la revelación divina. Revelación es la manifestación progresiva de Dios en la historia, culminando en Cristo. La Biblia es testimonio fiel de esta revelación.",
+  "El canon bíblico es el conjunto de libros reconocidos como inspirados y normativos para la fe. Fue discernido en la tradición viva de la Iglesia. La Biblia católica incluye 73 libros, mientras que otras tradiciones pueden tener un canon distinto.",
+  "El Antiguo Testamento se formó en un contexto cultural del antiguo Oriente. La historia, las leyes y los profetas reflejan una experiencia de fe en medio de imperios como Egipto, Babilonia y Persia. El contexto ilumina el mensaje.",
+  "El Nuevo Testamento nace en el mundo grecorromano, con influencias judías y helenísticas. Jesús, los apóstoles y las primeras comunidades vivieron en un tiempo de tensión política, religiosa y cultural. Este contexto ayuda a entender su mensaje radical.",
+  "La Biblia contiene relatos históricos, poesía, leyes, profecía, evangelios, cartas y apocalíptica. Cada género comunica el mensaje de Dios desde su forma particular. Reconocer los géneros es clave para interpretar bien el texto.",
+  "La Alianza es el hilo conductor de la Biblia. Desde Noé, Abraham, Moisés hasta la Nueva Alianza en Cristo, Dios establece relaciones de amor, fidelidad y compromiso con su pueblo. Toda la Escritura puede leerse como historia de alianzas."
 ];
 let globoTimeout, clics = 0, timerTripleClick = null;
 function mostrarConsejo() {
