@@ -133,41 +133,40 @@
   <button class="btn-biblia" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia"></div>
 
-  <script>
-    let clickCount = 0, clickTimer;
-    const globo = document.getElementById("globo-tito");
-    const consejos = [
-      "Confía en el Señor con todo tu corazón (Proverbios 3,5).",
-      "Ama a tu prójimo como a ti mismo (Mateo 22,39).",
-      "Busca primero el Reino de Dios (Mateo 6,33).",
-      "Todo lo puedo en Cristo que me fortalece (Filipenses 4,13).",
-      "Bienaventurados los que tienen hambre de justicia (Mateo 5,6)."
-    ];
-    let consejoIndex = 0;
+ <script>
+  let clickCount = 0, clickTimer;
+  const globo = document.getElementById("globo-tito");
+  const menu = document.getElementById("menu-biblia"); // 👈 MOVIDO AQUÍ
+  const consejos = [
+    "Confía en el Señor con todo tu corazón (Proverbios 3,5).",
+    "Ama a tu prójimo como a ti mismo (Mateo 22,39).",
+    "Busca primero el Reino de Dios (Mateo 6,33).",
+    "Todo lo puedo en Cristo que me fortalece (Filipenses 4,13).",
+    "Bienaventurados los que tienen hambre de justicia (Mateo 5,6)."
+  ];
+  let consejoIndex = 0;
 
-    function titoClickHandler() {
-      clickCount++;
-      clearTimeout(clickTimer);
-      clickTimer = setTimeout(() => {
-        if (clickCount === 1) presentarseTito();
-        else if (clickCount === 3) mostrarConsejo();
-        clickCount = 0;
-      }, 400);
-    }
+  function titoClickHandler() {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      if (clickCount === 1) presentarseTito();
+      else if (clickCount === 3) mostrarConsejo();
+      clickCount = 0;
+    }, 400);
+  }
 
-    function mostrarConsejo() {
-      const consejo = consejos[consejoIndex];
-      globo.textContent = consejo;
-      globo.style.display = "block";
-      const leido = consejo.replace(/\(([^,]+),\s?(\d+)\)/g, (_, libro, vers) => `${libro} capítulo ${vers} versículo ${vers}`);
-      hablarConCallback(leido, () => globo.style.display = "none");
-      consejoIndex = (consejoIndex + 1) % consejos.length;
-    }
-
-    function toggleMenu() {
-      const menu = document.getElementById("menu-biblia");
-      if (menu.innerHTML === "") {
-        const temas = [
+  function mostrarConsejo() {
+    const consejo = consejos[consejoIndex];
+    globo.textContent = consejo;
+    globo.style.display = "block";
+    const leido = consejo.replace(/\(([^,]+),\s?(\d+)\)/g, (_, libro, vers) => `${libro} capítulo ${vers} versículo ${vers}`);
+    hablarConCallback(leido, () => globo.style.display = "none");
+    consejoIndex = (consejoIndex + 1) % consejos.length;
+  }
+     function toggleMenu() {
+    if (menu.innerHTML === "") {
+      const temas = [
   {
     titulo: '1. ¿Qué es la Biblia?',
     contenido: 'La Biblia es la Palabra de Dios consignada por escrito bajo la inspiración del Espíritu Santo (cf. Dei Verbum 9). Es una colección de libros que, aunque diversos en género, época y autor, constituyen una unidad orgánica centrada en el designio salvífico de Dios. En ella, Dios se comunica de forma humana para que el hombre entienda la verdad divina. Jesucristo, Palabra hecha carne, es la plenitud de esta revelación (cf. DV 4). La Escritura, leída en la Iglesia y a la luz del Espíritu, guía la fe, la vida y la misión del creyente como alimento espiritual indispensable (cf. DV 21).'
@@ -197,19 +196,18 @@
     contenido: 'La alianza es el hilo conductor de toda la Biblia. Desde Noé y Abraham hasta Moisés y David, Dios establece pactos que expresan su fidelidad gratuita y la vocación del pueblo a la obediencia y comunión. Estos pactos son signos históricos de la iniciativa divina. En Jesús, se cumple y supera toda alianza anterior: Él es el mediador de la nueva y eterna alianza, sellada en su sangre. Esta alianza no es ya externa o legal, sino interior y transformadora, inscrita en el corazón por el Espíritu. Así, la fe cristiana se comprende como alianza de amor irrevocable.'
   }
 ];
-
-        temas.forEach((tema, i) => {
-          const id = i + 1;
-          menu.innerHTML += `
-            <div>
-              <button onclick="toggleContenido(${id})">${tema.titulo}</button>
-              <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
-            </div>
-          `;
-        });
-      }
-      menu.style.display = menu.style.display === "none" ? "block" : "none";
+      temas.forEach((tema, i) => {
+        const id = i + 1;
+        menu.innerHTML += `
+          <div>
+            <button onclick="toggleContenido(${id})">${tema.titulo}</button>
+            <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
+          </div>
+        `;
+      });
     }
+    menu.style.display = menu.style.display === "none" ? "block" : "none";
+  }
 
     function toggleContenido(num) {
       const contenido = document.getElementById(`contenido${num}`);
