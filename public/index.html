@@ -49,9 +49,9 @@
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
 
-  <!-- Presentación de Tito -->
   <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+      ondblclick="titoBromea()" onclick="titoClickHandler()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
     <div id="globo-tito" role="tooltip"></div>
     <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
@@ -61,100 +61,114 @@
 
   <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
 
-  <!-- Entrada de texto -->
   <textarea id="input" rows="4" style="width: 100%; padding: 10px; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;" placeholder="Escribe tu pregunta aquí..."></textarea>
   <br><br>
 
-  <!-- Botones -->
   <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Enviar pregunta</button>
   <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">🎤 Dictar</button>
   <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">🛑 Detener voz</button>
 
-  <!-- Indicador de carga -->
   <p id="cargando" style="display:none; font-style: italic; color: #888;">⏳ Tito está pensando...</p>
 
-  <!-- Área de respuesta -->
   <h3>Respuesta:</h3>
   <div id="respuesta" style="white-space: pre-wrap; background: #f3f3f3; padding: 1rem; border-radius: 5px;"></div>
 
-  <!-- Botón y menú de Biblia -->
   <button onclick="toggleMenu()" style="background-color: #8e44ad; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia" style="display: none; margin-top: 1rem;"></div>
 
   <script>
-    const consejosBiblicos = [
-      "Confía en el Señor con todo tu corazón (Prov 3,5).",
-      "No temas, porque yo estoy contigo (Is 41,10).",
-      "Ama a tu prójimo como a ti mismo (Mt 22,39).",
-      "Busca primero el Reino de Dios (Mt 6,33).",
-      "Sé constante en la oración (Rom 12,12).",
-      "Dios es nuestro refugio y fortaleza (Sal 46,1).",
-      "Todo lo puedo en Cristo que me fortalece (Flp 4,13).",
-      "Perdona setenta veces siete (Mt 18,22).",
-      "El Señor es mi pastor, nada me falta (Sal 23,1).",
-      "Bienaventurados los que tienen hambre de justicia (Mt 5,6)."
-    ];
-    let indiceConsejo = 0;
-
-    function mostrarConsejoBiblico() {
-      const globo = document.getElementById("globo-tito");
-      const img = document.getElementById("tito-img");
-      globo.textContent = consejosBiblicos[indiceConsejo];
-      globo.style.display = "block";
-      const rect = img.getBoundingClientRect();
-      globo.style.top = `${img.offsetTop - 10}px`;
-      globo.style.left = `${img.offsetLeft + img.offsetWidth + 10}px`;
-      hablar(consejosBiblicos[indiceConsejo]);
-      indiceConsejo = (indiceConsejo + 1) % consejosBiblicos.length;
-      setTimeout(() => globo.style.display = "none", 7000);
-    }
-
     let clickCount = 0;
     let clickTimer;
+    const consejos = [
+      "Confía en el Señor con todo tu corazón (Proverbios 3,5).",
+      "No temas, porque yo estoy contigo (Isaías 41,10).",
+      "Ama a tu prójimo como a ti mismo (Mateo 22,39).",
+      "Busca primero el Reino de Dios (Mateo 6,33).",
+      "Sé constante en la oración (Romanos 12,12).",
+      "Dios es nuestro refugio y fortaleza (Salmo 46,1).",
+      "Todo lo puedo en Cristo que me fortalece (Filipenses 4,13).",
+      "Perdona setenta veces siete (Mateo 18,22).",
+      "El Señor es mi pastor, nada me falta (Salmo 23,1).",
+      "Bienaventurados los que tienen hambre de justicia (Mateo 5,6)."
+    ];
+    let consejoIndex = 0;
 
-    document.getElementById("tito-img").addEventListener("click", () => {
+    function titoClickHandler() {
       clickCount++;
       clearTimeout(clickTimer);
       clickTimer = setTimeout(() => {
         if (clickCount === 1) {
           presentarseTito();
-        } else if (clickCount === 2) {
-          titoBromea();
         } else if (clickCount === 3) {
-          mostrarConsejoBiblico();
+          mostrarConsejo();
         }
         clickCount = 0;
       }, 400);
-    });
+    }
+
+    function mostrarConsejo() {
+      const globo = document.getElementById("globo-tito");
+      const consejo = consejos[consejoIndex];
+      globo.textContent = consejo;
+      globo.style.display = "block";
+      globo.style.left = "130px";
+      globo.style.top = "0px";
+      hablar(consejo.replace(/\(([^,]+),\s?(\d+)\)/g, (match, libro, vers) => ` ${libro} capítulo ${vers} versículo ${vers}`));
+      consejoIndex = (consejoIndex + 1) % consejos.length;
+    }
+
+    function hablar(texto) {
+      speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = "es-PE";
+      speechSynthesis.speak(msg);
+    }
+
+    function detenerVoz() {
+      speechSynthesis.cancel();
+    }
+
+    function titoBromea() {
+      const imgTito = document.getElementById("tito-img");
+      const texto = document.getElementById("presentacion-texto");
+      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
+      imgTito.src = "Tito riendo.png";
+      texto.textContent = mensaje;
+      hablar(mensaje);
+      setTimeout(() => {
+        imgTito.src = "Tito parado.jpg";
+        texto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      }, 6000);
+    }
 
     const temas = [
       {
         titulo: '1. ¿Qué es la Biblia?',
-        contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo. No es solo palabra humana sobre Dios, sino Palabra de Dios en palabras humanas. A través de relatos, leyes, profecías y sabiduría, la Biblia orienta a la humanidad hacia su plenitud en Cristo, culminación de toda la revelación.'
+        contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo. A través de relatos, leyes, profecías y sabiduría, la Biblia orienta a la humanidad hacia su plenitud en Cristo.'
       },
       {
         titulo: '2. Inspiración y Revelación',
-        contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar. La Sagrada Escritura, entonces, no es dictado, sino fruto de una cooperación divina-humana. La inspiración garantiza la verdad salvífica de los textos, y su interpretación exige fe, tradición viva y guía del magisterio para captar el sentido pleno en Cristo.'
+        contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar. La Sagrada Escritura no es dictado, sino fruto de una cooperación divina-humana.'
       },
       {
         titulo: '3. El canon de la Biblia',
-        contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo. Este discernimiento fue progresivo y dependió del uso litúrgico, la autoridad apostólica y la coherencia teológica con la fe recibida. El canon expresa una tradición viva y normativa: no todo escrito antiguo es Escritura. La autoridad del canon está fundamentada en la acción del Espíritu Santo que guía a la Iglesia.'
+        contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo. El canon expresa una tradición viva y normativa: no todo escrito antiguo es Escritura.'
       },
       {
         titulo: '4. Tipos, géneros y formas literarias',
-        contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma literaria comunica una verdad teológica de modo específico. Por ejemplo, los salmos cantan la fe del pueblo; las parábolas enseñan el Reino con imágenes; los relatos del Éxodo narran salvación con sentido litúrgico y simbólico. Interpretar correctamente implica respetar los géneros, el contexto y la intención del autor inspirado, para descubrir el mensaje revelado con fidelidad.'
+        contenido: 'La Biblia contiene leyes, narraciones, poesía, parábolas y discursos proféticos. Cada forma literaria comunica una verdad teológica de modo específico. Interpretar correctamente implica respetar los géneros, el contexto y la intención del autor inspirado.'
       },
       {
-        titulo: '5. Contexto cultural e histórico del AT',
-        contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán. Las leyes, símbolos y estructuras sociales muestran influencias compartidas, pero reinterpretadas desde la fe en el Dios único y libertador. La teología del Éxodo, la alianza en el Sinaí y la esperanza mesiánica surgen en contextos de opresión, exilio y restauración. Este trasfondo permite comprender la originalidad de Israel: una fe que se encarna en la historia, marcada por la memoria de la salvación.'
+        titulo: '5. Contexto cultural e histórico del Antiguo Testamento',
+        contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente. Las leyes, símbolos y estructuras sociales muestran influencias compartidas, pero reinterpretadas desde la fe en el Dios único y libertador.'
       },
       {
-        titulo: '6. Contexto cultural e histórico del NT',
-        contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas, políticas y sociales. El judaísmo del Segundo Templo estaba dividido en grupos como fariseos, saduceos y esenios, cada uno con expectativas escatológicas. El kerigma cristiano surge como cumplimiento de las promesas del Antiguo Testamento, pero reformula el mesianismo desde la cruz y resurrección. El contexto histórico ilumina el conflicto con las autoridades y la apertura del Evangelio a los gentiles.'
+        titulo: '6. Contexto cultural e histórico del Nuevo Testamento',
+        contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas, políticas y sociales. El kerigma cristiano surge como cumplimiento de las promesas del Antiguo Testamento.'
       },
       {
         titulo: '7. La alianza como eje transversal',
-        contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. Iniciada con Noé, particularizada en Abrahán, formalizada en Moisés y renovada en David, la alianza expresa el vínculo entre Dios y su pueblo. Esta relación implica elección, promesa y fidelidad. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre. Esta culminación une ley y gracia, justicia y misericordia, y abre la comunión definitiva con Dios. Toda la Biblia se lee a la luz de esta lógica de alianza.'
+        contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. Iniciada con Noé, particularizada en Abrahán, formalizada en Moisés y renovada en David, esta culmina en Jesús con la nueva y eterna alianza.'
       }
     ];
 
@@ -162,55 +176,33 @@
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
         temas.forEach((tema, i) => {
+          const id = i + 1;
           menu.innerHTML += `<div>
-            <button onclick="toggleContenido(${i})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
-            <div id="contenido${i}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
+            <button onclick="toggleContenido(${id})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
+            <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
           </div>`;
         });
       }
       menu.style.display = menu.style.display === "none" ? "block" : "none";
     }
 
-    function toggleContenido(index) {
-      const contenido = document.getElementById(`contenido${index}`);
+    function toggleContenido(num) {
+      const contenido = document.getElementById(`contenido${num}`);
       const todos = document.querySelectorAll(".acordeon-contenido");
-      todos.forEach(div => div.classList.remove("activo"));
-      contenido.classList.toggle("activo");
-      hablar(temas[index].contenido);
-    }
-
-    function hablar(texto) {
-      speechSynthesis.cancel();
-      const mensaje = new SpeechSynthesisUtterance(texto);
-      mensaje.lang = 'es-PE';
-      speechSynthesis.speak(mensaje);
-    }
-
-    function detenerVoz() {
-      speechSynthesis.cancel();
-    }
-
-    function presentarseTito() {
-      const saludo = "Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      document.getElementById("presentacion-texto").textContent = saludo;
-      hablar(saludo);
-    }
-
-    function titoBromea() {
-      const imgTito = document.getElementById("tito-img");
-      const presentacionTexto = document.getElementById("presentacion-texto");
-      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
-      imgTito.src = "Tito riendo.png";
-      presentacionTexto.textContent = mensaje;
-      hablar(mensaje);
-      setTimeout(() => {
-        imgTito.src = "Tito parado.jpg";
-        presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      }, 6000);
+      if (!contenido.classList.contains("activo")) {
+        todos.forEach(div => div.classList.remove("activo"));
+        contenido.classList.add("activo");
+        hablar(contenido.textContent);
+      } else {
+        contenido.classList.remove("activo");
+        detenerVoz();
+      }
     }
   </script>
+
 </body>
 </html>
+
 
 
 
