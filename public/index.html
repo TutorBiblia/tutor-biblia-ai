@@ -27,29 +27,31 @@
       margin-right: 20px;
       transition: transform 0.3s ease;
     }
-    #globo-tito {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      border: 2px solid #3498db;
-      border-radius: 10px;
-      padding: 10px;
-      max-width: 300px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-      z-index: 10;
-      font-size: 1rem;
-      left: -310px;
-      top: 20px;
-    }
-    #globo-tito::after {
-      content: "";
-      position: absolute;
-      top: 20px;
-      right: -20px;
-      border-width: 10px;
-      border-style: solid;
-      border-color: transparent transparent transparent #3498db;
-    }
+ #globo-tito {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 2px solid #3498db;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 300px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  z-index: 10;
+  font-size: 1rem;
+  left: 130px; /* posición a la derecha de Tito */
+  top: 20px;
+}
+
+#globo-tito::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: -20px; /* piquito del globo en el borde izquierdo */
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #3498db transparent transparent;
+}
+
     button {
       padding: 10px 20px;
       border: none;
