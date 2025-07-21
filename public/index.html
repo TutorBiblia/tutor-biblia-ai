@@ -62,10 +62,15 @@
       font-size: 1rem;
       cursor: pointer;
     }
+    #tito-explica {
+      display: none;
+      width: 120px;
+      margin: 10px auto;
+      animation: aparecer 0.5s ease-in-out;
+    }
   </style>
 </head>
 <body>
-  <!-- Presentación de Tito con globo al costado -->
   <div id="contenedor-tito" style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito" onclick="presentarseTito(); contarClics()" ondblclick="titoBromea()" style="cursor: pointer; width: 140px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
     <p id="presentacion-texto" style="font-size: 1.4rem; font-weight: 500;">
@@ -90,16 +95,18 @@
   <p style="font-weight: bold; margin-top: 20px;">Respuesta:</p>
   <div id="respuesta" style="background: #ecf0f1; padding: 10px; border-radius: 6px; min-height: 60px;"></div>
 
+  <img id="tito-explica" src="Tito explicando.png" alt="Tito explicando">
+
   <div style="margin-top: 20px;">
     <button class="boton-biblia" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
     <div id="menu-biblia" class="menu-subtemas">
-      <button>📖 Tema 1: Creación y propósito</button>
-      <button>🌍 Tema 2: Historia de Israel</button>
-      <button>✝️ Tema 3: Jesús y el Reino</button>
-      <button>🕊 Tema 4: Espíritu y misión</button>
-      <button>📜 Tema 5: Biblia y liturgia</button>
-      <button>❤️ Tema 6: Ética y comunidad</button>
-      <button>🌟 Tema 7: Esperanza escatológica</button>
+      <button onclick="mostrarSubtema(0)">📖 Tema 1: Creación y propósito</button>
+      <button onclick="mostrarSubtema(1)">🌍 Tema 2: Historia de Israel</button>
+      <button onclick="mostrarSubtema(2)">✝️ Tema 3: Jesús y el Reino</button>
+      <button onclick="mostrarSubtema(3)">🕊 Tema 4: Espíritu y misión</button>
+      <button onclick="mostrarSubtema(4)">📜 Tema 5: Biblia y liturgia</button>
+      <button onclick="mostrarSubtema(5)">❤️ Tema 6: Ética y comunidad</button>
+      <button onclick="mostrarSubtema(6)">🌟 Tema 7: Esperanza escatológica</button>
     </div>
   </div>
 
@@ -113,6 +120,15 @@ const consejosBiblicos = [
   { texto: "Perdona, como también tú has sido perdonado (Col 3,13).", color: "#d35400" },
   { texto: "Haz el bien, busca la paz y síguela (Sal 34,15).", color: "#27ae60" },
   { texto: "Todo lo puedo en Cristo que me fortalece (Flp 4,13).", color: "#34495e" }
+];
+const subtemasBiblicos = [
+  "Dios crea con sabiduría, amor y propósito. El ser humano es imagen suya, llamado a vivir en comunión, responsabilidad y libertad ante la creación. (Gn 1-2).",
+  "Israel es el pueblo elegido. Su historia muestra la fidelidad de Dios pese a la infidelidad humana. Patriarcas, Éxodo, alianza y profecía guían su camino. (Gn–Mal).",
+  "Jesús proclama el Reino: justicia, misericordia y verdad. Sus parábolas, milagros y la cruz revelan al Mesías que transforma y salva. (Mt–Lc).",
+  "El Espíritu Santo impulsa a la Iglesia en misión. Es presencia viva de Dios que consuela, enseña y santifica. (Hch–1Cor).",
+  "La liturgia une Escritura y sacramento. En la misa escuchamos y respondemos a la Palabra viva. (Lc 24,13–35).",
+  "La fe se vive en comunidad. El amor, perdón y servicio construyen el Reino aquí y ahora. (Mt 5–7; 1Jn).",
+  "La esperanza cristiana apunta a cielos nuevos y tierra nueva. Cristo resucitado es primicia de la nueva creación. (Ap 21–22)."
 ];
 let globoTimeout, clics = 0, timerTripleClick = null;
 function mostrarConsejo() {
@@ -129,8 +145,7 @@ function mostrarConsejo() {
   globoTimeout = setTimeout(() => { globo.style.display = "none"; }, 12000);
 }
 function cerrarConsejo() {
-  const globo = document.getElementById("globo-consejo");
-  globo.style.display = "none";
+  document.getElementById("globo-consejo").style.display = "none";
   clearTimeout(globoTimeout);
 }
 function hablar(texto) {
@@ -170,6 +185,14 @@ function titoBromea() {
 function toggleMenu() {
   const menu = document.getElementById("menu-biblia");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+function mostrarSubtema(index) {
+  const respuesta = document.getElementById("respuesta");
+  const imgExplica = document.getElementById("tito-explica");
+  respuesta.textContent = subtemasBiblicos[index];
+  hablar(subtemasBiblicos[index]);
+  imgExplica.style.display = "block";
+  setTimeout(() => { imgExplica.style.display = "none"; }, 10000);
 }
 setInterval(mostrarConsejo, 60000);
 </script>
