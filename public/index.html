@@ -228,7 +228,81 @@
       speechSynthesis.speak(mensaje);
     }
   </script>
+  <!-- Globo de consejos con botón de cierre -->
+<div id="globo-consejo" style="
+  display: none;
+  position: fixed;
+  bottom: 130px;
+  right: 30px;
+  max-width: 280px;
+  background: #ecf0f1;
+  border-left: 6px solid #3498db;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  padding: 15px 15px 10px;
+  font-size: 1rem;
+  color: #2c3e50;
+  z-index: 9999;
+  animation: aparecer 0.5s ease-in-out;
+">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <strong>✍ Consejo bíblico</strong>
+    <button onclick="cerrarConsejo()" style="background: none; border: none; font-size: 1rem; cursor: pointer;">❌</button>
+  </div>
+  <p id="texto-consejo" style="margin-top: 8px;"></p>
+</div>
 
+<script>
+// Lista de consejos con color temático
+const consejosBiblicos = [
+  { texto: "Confía en el Señor con todo tu corazón (Prov 3,5).", color: "#2980b9" },
+  { texto: "Tu palabra es lámpara para mis pasos (Sal 119,105).", color: "#8e44ad" },
+  { texto: "No temas, porque yo estoy contigo (Is 41,10).", color: "#c0392b" },
+  { texto: "El que cree en mí, aunque muera, vivirá (Jn 11,25).", color: "#16a085" },
+  { texto: "Bienaventurados los limpios de corazón (Mt 5,8).", color: "#f39c12" },
+  { texto: "Perdona, como también tú has sido perdonado (Col 3,13).", color: "#d35400" },
+  { texto: "Haz el bien, busca la paz y síguela (Sal 34,15).", color: "#27ae60" },
+  { texto: "Todo lo puedo en Cristo que me fortalece (Flp 4,13).", color: "#34495e" }
+];
+
+let globoTimeout;
+
+function mostrarConsejo() {
+  const globo = document.getElementById("globo-consejo");
+  const texto = document.getElementById("texto-consejo");
+  const input = document.getElementById("input");
+
+  // No mostrar si el usuario está escribiendo
+  if (document.activeElement === input) return;
+
+  const consejo = consejosBiblicos[Math.floor(Math.random() * consejosBiblicos.length)];
+  texto.textContent = consejo.texto;
+  globo.style.display = "block";
+  globo.style.borderLeft = `6px solid ${consejo.color}`;
+  hablar(consejo.texto);
+
+  clearTimeout(globoTimeout);
+  globoTimeout = setTimeout(() => {
+    globo.style.display = "none";
+  }, 12000);
+}
+
+function cerrarConsejo() {
+  const globo = document.getElementById("globo-consejo");
+  globo.style.display = "none";
+  clearTimeout(globoTimeout);
+}
+
+// Mostrar consejo cada 60 segundos
+setInterval(mostrarConsejo, 60000);
+</script>
+
+<style>
+@keyframes aparecer {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+</style>
 </body>
 </html>
 
