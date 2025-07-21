@@ -228,29 +228,40 @@
       speechSynthesis.speak(mensaje);
     }
   </script>
- <!-- Globo de consejos con botón de cierre -->
-<div id="globo-consejo" style="
-  display: none;
-  position: fixed;
-  bottom: 130px;
-  right: 30px;
-  max-width: 280px;
-  background: #ecf0f1;
-  border-left: 6px solid #3498db;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-  padding: 15px 15px 10px;
-  font-size: 1rem;
-  color: #2c3e50;
-  z-index: 9999;
-  animation: aparecer 0.5s ease-in-out;
-">
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <strong>✍ Consejo bíblico</strong>
-    <button onclick="cerrarConsejo()" style="background: none; border: none; font-size: 1rem; cursor: pointer;">❌</button>
+<!-- Presentación de Tito CON globo al costado -->
+<div id="contenedor-tito" style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+  <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+    onclick="presentarseTito()" ondblclick="titoBromea()"
+    style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
+  <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
+    Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
+  </p>
+
+  <!-- Globo de consejo al lado de Tito -->
+  <div id="globo-consejo" style="
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 140px;
+    max-width: 250px;
+    background: #ecf0f1;
+    border-left: 6px solid #3498db;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    padding: 15px 15px 10px;
+    font-size: 1rem;
+    color: #2c3e50;
+    z-index: 10;
+    animation: aparecer 0.5s ease-in-out;
+  ">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <strong>🗨 Consejo bíblico</strong>
+      <button onclick="cerrarConsejo()" style="background: none; border: none; font-size: 1rem; cursor: pointer;">❌</button>
+    </div>
+    <p id="texto-consejo" style="margin-top: 8px;"></p>
   </div>
-  <p id="texto-consejo" style="margin-top: 8px;"></p>
 </div>
+
 
 <script>
 // Lista de consejos con color temático
