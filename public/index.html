@@ -24,20 +24,39 @@
       max-height: 500px;
       padding: 10px;
     }
+    #globo-tito {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 2px solid #3498db;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 300px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+      font-size: 1rem;
+    }
+    #globo-tito::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 30px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent transparent #3498db transparent;
+    }
   </style>
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
-
-  <!-- Presentación de Tito -->
-  <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+  <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
       onclick="presentarseTito()" ondblclick="titoBromea()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
+    <div id="globo-tito" role="tooltip"></div>
     <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
       Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
     </p>
   </div>
-
   <h1 style="font-size: 1.8rem; font-weight: bold; color: #2980b9;">📖 Tutor Bíblico IA</h1>
 
   <!-- Entrada de texto -->
@@ -59,9 +78,51 @@
   <!-- Botón y menú de Biblia -->
   <button onclick="toggleMenu()" style="background-color: #8e44ad; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">📘 Aprende sobre la Biblia</button>
   <div id="menu-biblia" style="display: none; margin-top: 1rem;"></div>
-
-  <!-- Script principal -->
   <script>
+    const consejosBiblicos = [
+      "Confía en el Señor con todo tu corazón (Prov 3,5).",
+      "No temas, porque yo estoy contigo (Is 41,10).",
+      "Ama a tu prójimo como a ti mismo (Mt 22,39).",
+      "Busca primero el Reino de Dios (Mt 6,33).",
+      "El Señor es mi pastor, nada me falta (Sal 23,1).",
+      "Perdona, como Dios te ha perdonado (Col 3,13).",
+      "Sé fuerte y valiente (Jos 1,9).",
+      "La fe mueve montañas (Mt 17,20).",
+      "Ora sin cesar (1 Tes 5,17).",
+      "El amor nunca falla (1 Cor 13,8)."
+    ];
+
+    let indiceConsejo = 0;
+    let clickCount = 0;
+    let tripleClickTimer;
+
+    document.getElementById("tito-img").addEventListener("click", () => {
+      clickCount++;
+      clearTimeout(tripleClickTimer);
+      tripleClickTimer = setTimeout(() => clickCount = 0, 500);
+      if (clickCount === 3) {
+        mostrarConsejo();
+        clickCount = 0;
+      }
+    });
+
+    function mostrarConsejo() {
+      const globo = document.getElementById("globo-tito");
+      globo.textContent = consejosBiblicos[indiceConsejo];
+      indiceConsejo = (indiceConsejo + 1) % consejosBiblicos.length;
+      const titoImg = document.getElementById("tito-img");
+      const globoWidth = globo.offsetWidth;
+      const leftPos = titoImg.offsetLeft + 130;
+      const maxLeft = window.innerWidth - globoWidth - 20;
+      globo.style.left = `${Math.min(leftPos, maxLeft)}px`;
+      globo.style.top = `${titoImg.offsetTop - 100}px`;
+      globo.style.display = "block";
+      hablar(globo.textContent);
+      setTimeout(() => {
+        globo.style.display = "none";
+      }, 6000);
+    }
+
     async function enviarMensaje() {
       const mensaje = document.getElementById('input').value;
       const respuestaDiv = document.getElementById('respuesta');
@@ -156,83 +217,13 @@
     function toggleMenu() {
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
-        const temas = [
-  {
-    titulo: '1. ¿Qué es la Biblia?',
-    contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo. No es solo palabra humana sobre Dios, sino Palabra de Dios en palabras humanas (DV 12). A través de relatos, leyes, profecías y sabiduría, la Biblia orienta a la humanidad hacia su plenitud en Cristo, culminación de toda la revelación (Heb 1,1–2).'
-  },
-  {
-    titulo: '2. Inspiración y Revelación',
-    contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar. La Sagrada Escritura, entonces, no es dictado, sino fruto de una cooperación divina-humana (DV 11). La inspiración garantiza la verdad salvífica de los textos, y su interpretación exige fe, tradición viva y guía del magisterio para captar el sentido pleno en Cristo.'
-  },
-  {
-    titulo: '3. El canon de la Biblia',
-    contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo. Este discernimiento fue progresivo y dependió del uso litúrgico, la autoridad apostólica y la coherencia teológica con la fe recibida. El canon expresa una tradición viva y normativa: no todo escrito antiguo es Escritura. La autoridad del canon está fundamentada en la acción del Espíritu Santo que guía a la Iglesia (cf. 2 Tim 3,16).'
-  },
-  {
-    titulo: '4. Tipos, géneros y formas literarias',
-    contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma literaria comunica una verdad teológica de modo específico. Por ejemplo, los salmos cantan la fe del pueblo; las parábolas enseñan el Reino con imágenes; los relatos del Éxodo narran salvación con sentido litúrgico y simbólico. Interpretar correctamente implica respetar los géneros, el contexto y la intención del autor inspirado, para descubrir el mensaje revelado con fidelidad (cf. DV 12).'
-  },
-  {
-    titulo: '5. Contexto cultural e histórico del Antiguo Testamento',
-    contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán. Las leyes, símbolos y estructuras sociales muestran influencias compartidas, pero reinterpretadas desde la fe en el Dios único y libertador. La teología del Éxodo, la alianza en el Sinaí y la esperanza mesiánica surgen en contextos de opresión, exilio y restauración. Este trasfondo permite comprender la originalidad de Israel: una fe que se encarna en la historia, marcada por la memoria de la salvación.'
-  },
-  {
-    titulo: '6. Contexto cultural e histórico del Nuevo Testamento',
-    contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas, políticas y sociales. El judaísmo del Segundo Templo estaba dividido en grupos como fariseos, saduceos y esenios, cada uno con expectativas escatológicas. El kerigma cristiano surge como cumplimiento de las promesas del Antiguo Testamento, pero reformula el mesianismo desde la cruz y resurrección. El contexto histórico ilumina el conflicto con las autoridades y la apertura del Evangelio a los gentiles.'
-  },
-  {
-    titulo: '7. La alianza como eje transversal',
-    contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. Iniciada con Noé, particularizada en Abrahán, formalizada en Moisés y renovada en David, la alianza expresa el vínculo entre Dios y su pueblo. Esta relación implica elección, promesa y fidelidad. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre (Lc 22,20). Esta culminación une ley y gracia, justicia y misericordia, y abre la comunión definitiva con Dios. Toda la Biblia se lee a la luz de esta lógica de alianza.'
-  }
-];
-        temas.forEach((tema, i) => {
-          const id = i + 1;
-          menu.innerHTML += `<div>
-            <button onclick="toggleContenido(${id})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
-            <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
-          </div>`;
-        });
+        menu.innerHTML = "<p>Aquí irían los temas bíblicos...</p>"; // Puedes insertar tus temas aquí.
       }
       menu.style.display = menu.style.display === "none" ? "block" : "none";
     }
-
-    function toggleContenido(num) {
-      const contenido = document.getElementById(`contenido${num}`);
-      const titoImg = document.getElementById("tito-img");
-      const presentacionTexto = document.getElementById("presentacion-texto");
-      if (!contenido.classList.contains("activo")) {
-        document.querySelectorAll(".acordeon-contenido").forEach(div => div.classList.remove("activo"));
-        contenido.classList.add("activo");
-        const texto = contenido.textContent.trim();
-        detenerVoz();
-        titoImg.src = "Tito explica.png";
-        presentacionTexto.textContent = "Presta atención";
-        hablarConCallback(texto, () => {
-          titoImg.src = "Tito parado.jpg";
-          presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-        });
-      } else {
-        contenido.classList.remove("activo");
-        detenerVoz();
-        titoImg.src = "Tito parado.jpg";
-        presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
-      }
-    }
-
-    function hablarConCallback(texto, callback) {
-      speechSynthesis.cancel();
-      const mensaje = new SpeechSynthesisUtterance(texto);
-      mensaje.lang = 'es-PE';
-      mensaje.onend = callback;
-      speechSynthesis.speak(mensaje);
-    }
   </script>
-
 </body>
 </html>
-
-
 
 
 
