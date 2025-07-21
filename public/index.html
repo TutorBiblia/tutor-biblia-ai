@@ -21,7 +21,7 @@
       transition: max-height 0.4s ease, padding 0.4s ease;
     }
     .acordeon-contenido.activo {
-      max-height: 500px;
+      max-height: 1000px;
       padding: 10px;
     }
     @keyframes aparecer {
@@ -74,7 +74,7 @@
   <div id="respuesta" style="background: #ecf0f1; padding: 10px; border-radius: 6px; min-height: 60px;"></div>
 
   <div style="margin-top: 20px;">
-    <button onclick="toggleMenu()" style="background-color: purple; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;">📘 Aprende sobre la Biblia</button>
+    <button onclick="toggleMenu()" style="background-color: purple; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer; width: 100%;">📘 Aprende sobre la Biblia</button>
     <div id="menu-biblia" style="margin-top: 10px;"></div>
   </div>
 
@@ -142,10 +142,65 @@ function titoBromea() {
     presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
   }, 6000);
 }
+function toggleMenu() {
+  const menu = document.getElementById("menu-biblia");
+  if (menu.innerHTML === "") {
+    const temas = [
+      { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica...' },
+      { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia...' },
+      { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe...' },
+      { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía...' },
+      { titulo: '5. Contexto cultural e histórico del AT', contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente...' },
+      { titulo: '6. Contexto cultural e histórico del NT', contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano...' },
+      { titulo: '7. La alianza como eje transversal', contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis...' }
+    ];
+    temas.forEach((tema, i) => {
+      const id = i + 1;
+      menu.innerHTML += `<div>
+        <button onclick="toggleContenido(${id})" style="background-color: #3498db; color: white; width: 100%; padding: 10px; margin-bottom: 5px; text-align: left; border: none; border-radius: 6px; cursor: pointer;">${tema.titulo}</button>
+        <div id="contenido${id}" class="acordeon-contenido"><p>${tema.contenido}</p></div>
+      </div>`;
+    });
+  }
+  menu.style.display = menu.style.display === "none" ? "block" : "none";
+}
+function toggleContenido(num) {
+  const contenido = document.getElementById(`contenido${num}`);
+  const titoImg = document.getElementById("tito-img");
+  const presentacionTexto = document.getElementById("presentacion-texto");
+  if (!contenido.classList.contains("activo")) {
+    document.querySelectorAll(".acordeon-contenido").forEach(div => div.classList.remove("activo"));
+    contenido.classList.add("activo");
+    const texto = contenido.textContent.trim();
+    detenerVoz();
+    titoImg.src = "Tito explica.png";
+    presentacionTexto.textContent = "Presta atención";
+    hablarConCallback(texto, () => {
+      titoImg.src = "Tito parado.jpg";
+      presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+    });
+  } else {
+    contenido.classList.remove("activo");
+    detenerVoz();
+    titoImg.src = "Tito parado.jpg";
+    presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+  }
+}
+function hablarConCallback(texto, callback) {
+  speechSynthesis.cancel();
+  const mensaje = new SpeechSynthesisUtterance(texto);
+  mensaje.lang = 'es-PE';
+  mensaje.onend = callback;
+  speechSynthesis.speak(mensaje);
+}
+function detenerVoz() {
+  speechSynthesis.cancel();
+}
 setInterval(mostrarConsejo, 60000);
 </script>
 </body>
 </html>
+
 
 
 
