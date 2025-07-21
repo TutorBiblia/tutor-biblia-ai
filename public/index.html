@@ -90,6 +90,24 @@
       max-height: 500px;
       padding: 10px;
     }
+    .btn-biblia {
+  background-color: #8e44ad;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-biblia:focus,
+.btn-biblia:active {
+  background-color: #8e44ad !important;
+  color: white !important;
+  outline: none;
+}
+
   </style>
 </head>
 <body>
@@ -110,8 +128,8 @@
   <h3>Respuesta:</h3>
   <div id="respuesta" style="background-color: #f5f5f5; padding: 10px; border-radius: 8px;"></div>
 
-  <button onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
-  <div id="menu-biblia"></div>
+  <button class="btn-biblia" onclick="toggleMenu()">📘 Aprende sobre la Biblia</button>
+
 
   <script>
     let clickCount = 0, clickTimer;
