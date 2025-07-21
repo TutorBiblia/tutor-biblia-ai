@@ -52,7 +52,7 @@
   <!-- Presentación de Tito -->
   <div style="position: relative; display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
-      onclick="presentarseTito()" ondblclick="titoBromea()"
+      onclick="presentarseTito()" ondblclick="titoBromea()" onauxclick="mostrarConsejoBiblico()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
     <div id="globo-tito" role="tooltip"></div>
     <p id="presentacion-texto" style="font-size: 1.2rem; font-weight: 500;">
@@ -83,14 +83,62 @@
   <div id="menu-biblia" style="display: none; margin-top: 1rem;"></div>
 
   <script>
+    const consejosBiblicos = [
+      "Confía en el Señor con todo tu corazón (Prov 3,5).",
+      "No temas, porque yo estoy contigo (Is 41,10).",
+      "Ama a tu prójimo como a ti mismo (Mt 22,39).",
+      "Busca primero el Reino de Dios (Mt 6,33).",
+      "Sé constante en la oración (Rom 12,12).",
+      "Dios es nuestro refugio y fortaleza (Sal 46,1).",
+      "Todo lo puedo en Cristo que me fortalece (Flp 4,13).",
+      "Perdona setenta veces siete (Mt 18,22).",
+      "El Señor es mi pastor, nada me falta (Sal 23,1).",
+      "Bienaventurados los que tienen hambre de justicia (Mt 5,6)."
+    ];
+    let indiceConsejo = 0;
+
+    function mostrarConsejoBiblico() {
+      const globo = document.getElementById("globo-tito");
+      const img = document.getElementById("tito-img");
+      globo.textContent = consejosBiblicos[indiceConsejo];
+      globo.style.display = "block";
+      const rect = img.getBoundingClientRect();
+      globo.style.top = `${img.offsetTop - 10}px`;
+      globo.style.left = `${img.offsetLeft + img.offsetWidth + 10}px`;
+      hablar(consejosBiblicos[indiceConsejo]);
+      indiceConsejo = (indiceConsejo + 1) % consejosBiblicos.length;
+      setTimeout(() => globo.style.display = "none", 7000);
+    }
+
     const temas = [
-      { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo.' },
-      { titulo: '2. Inspiración y Revelación', contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar.' },
-      { titulo: '3. El canon de la Biblia', contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo.' },
-      { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma comunica una verdad teológica de modo específico.' },
-      { titulo: '5. Contexto cultural e histórico del AT', contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán.' },
-      { titulo: '6. Contexto cultural e histórico del NT', contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas y sociales.' },
-      { titulo: '7. La alianza como eje transversal', contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre (Lc 22,20).' }
+      {
+        titulo: '1. ¿Qué es la Biblia?',
+        contenido: 'La Biblia es una colección de libros inspirados por Dios que revelan progresivamente su voluntad salvífica. Escrita por diversos autores en contextos históricos distintos, forma una unidad teológica centrada en la historia de la alianza entre Dios y su pueblo. No es solo palabra humana sobre Dios, sino Palabra de Dios en palabras humanas. A través de relatos, leyes, profecías y sabiduría, la Biblia orienta a la humanidad hacia su plenitud en Cristo, culminación de toda la revelación.'
+      },
+      {
+        titulo: '2. Inspiración y Revelación',
+        contenido: 'La revelación es el acto por el cual Dios se da a conocer libremente en la historia, y la inspiración es la acción del Espíritu Santo que mueve a los autores bíblicos a escribir lo que Dios quiere comunicar. La Sagrada Escritura, entonces, no es dictado, sino fruto de una cooperación divina-humana. La inspiración garantiza la verdad salvífica de los textos, y su interpretación exige fe, tradición viva y guía del magisterio para captar el sentido pleno en Cristo.'
+      },
+      {
+        titulo: '3. El canon de la Biblia',
+        contenido: 'El canon bíblico es el conjunto de libros reconocidos como inspirados por la comunidad de fe. En la Iglesia católica incluye 46 libros del Antiguo Testamento y 27 del Nuevo. Este discernimiento fue progresivo y dependió del uso litúrgico, la autoridad apostólica y la coherencia teológica con la fe recibida. El canon expresa una tradición viva y normativa: no todo escrito antiguo es Escritura. La autoridad del canon está fundamentada en la acción del Espíritu Santo que guía a la Iglesia.'
+      },
+      {
+        titulo: '4. Tipos, géneros y formas literarias',
+        contenido: 'La Biblia no es uniforme en su expresión: contiene leyes, narraciones, poesía, parábolas, discursos proféticos y apocalípticos. Cada forma literaria comunica una verdad teológica de modo específico. Por ejemplo, los salmos cantan la fe del pueblo; las parábolas enseñan el Reino con imágenes; los relatos del Éxodo narran salvación con sentido litúrgico y simbólico. Interpretar correctamente implica respetar los géneros, el contexto y la intención del autor inspirado, para descubrir el mensaje revelado con fidelidad.'
+      },
+      {
+        titulo: '5. Contexto cultural e histórico del AT',
+        contenido: 'El Antiguo Testamento se configura en diálogo con culturas del Antiguo Cercano Oriente: Egipto, Mesopotamia y Canaán. Las leyes, símbolos y estructuras sociales muestran influencias compartidas, pero reinterpretadas desde la fe en el Dios único y libertador. La teología del Éxodo, la alianza en el Sinaí y la esperanza mesiánica surgen en contextos de opresión, exilio y restauración. Este trasfondo permite comprender la originalidad de Israel: una fe que se encarna en la historia, marcada por la memoria de la salvación.'
+      },
+      {
+        titulo: '6. Contexto cultural e histórico del NT',
+        contenido: 'El Nuevo Testamento nace en un mundo helenizado y bajo dominio romano. Jesús vive en una Palestina pluricultural, con tensiones religiosas, políticas y sociales. El judaísmo del Segundo Templo estaba dividido en grupos como fariseos, saduceos y esenios, cada uno con expectativas escatológicas. El kerigma cristiano surge como cumplimiento de las promesas del Antiguo Testamento, pero reformula el mesianismo desde la cruz y resurrección. El contexto histórico ilumina el conflicto con las autoridades y la apertura del Evangelio a los gentiles.'
+      },
+      {
+        titulo: '7. La alianza como eje transversal',
+        contenido: 'La alianza estructura la revelación bíblica desde Génesis hasta Apocalipsis. Iniciada con Noé, particularizada en Abrahán, formalizada en Moisés y renovada en David, la alianza expresa el vínculo entre Dios y su pueblo. Esta relación implica elección, promesa y fidelidad. En Jesús, Dios establece la nueva y eterna alianza sellada con su sangre. Esta culminación une ley y gracia, justicia y misericordia, y abre la comunión definitiva con Dios. Toda la Biblia se lee a la luz de esta lógica de alianza.'
+      }
     ];
 
     function toggleMenu() {
@@ -111,11 +159,41 @@
       const todos = document.querySelectorAll(".acordeon-contenido");
       todos.forEach(div => div.classList.remove("activo"));
       contenido.classList.toggle("activo");
+      hablar(temas[index].contenido);
+    }
+
+    function hablar(texto) {
+      speechSynthesis.cancel();
+      const mensaje = new SpeechSynthesisUtterance(texto);
+      mensaje.lang = 'es-PE';
+      speechSynthesis.speak(mensaje);
+    }
+
+    function detenerVoz() {
+      speechSynthesis.cancel();
+    }
+
+    function presentarseTito() {
+      const saludo = "Hola, soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      document.getElementById("presentacion-texto").textContent = saludo;
+      hablar(saludo);
+    }
+
+    function titoBromea() {
+      const imgTito = document.getElementById("tito-img");
+      const presentacionTexto = document.getElementById("presentacion-texto");
+      const mensaje = "¡Me haces cosquillas! ¿Quieres hacerme una pregunta?";
+      imgTito.src = "Tito riendo.png";
+      presentacionTexto.textContent = mensaje;
+      hablar(mensaje);
+      setTimeout(() => {
+        imgTito.src = "Tito parado.jpg";
+        presentacionTexto.textContent = "Hola soy Tito, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.";
+      }, 6000);
     }
   </script>
 </body>
 </html>
-
 
 
 
