@@ -168,14 +168,36 @@
       const menu = document.getElementById("menu-biblia");
       if (menu.innerHTML === "") {
         const temas = [
-          { titulo: '1. ¿Qué es la Biblia?', contenido: 'La Biblia es la Sagrada Escritura que narra la historia de la salvación. Inspirada por Dios, contiene libros que revelan su voluntad desde la creación hasta la plenitud de la revelación en Cristo. Es Palabra de Dios en lenguaje humano y norma de vida para el creyente.' },
-          { titulo: '2. Inspiración y Revelación', contenido: 'La inspiración es la acción del Espíritu Santo que mueve a los autores a escribir lo que Dios quiere. La revelación es la iniciativa divina por la cual Dios se da a conocer progresivamente en la historia, culminando en Jesucristo, Palabra hecha carne.' },
-          { titulo: '3. El canon de la Biblia', contenido: 'El canon es el conjunto de libros reconocidos como inspirados por la Iglesia. En el catolicismo, el Antiguo Testamento consta de 46 libros y el Nuevo de 27. Este canon fue definido en el siglo IV, discernido por la tradición apostólica y guiado por el Espíritu Santo.' },
-          { titulo: '4. Tipos, géneros y formas literarias', contenido: 'La Biblia no es un libro uniforme, sino una biblioteca con diversos géneros: narración, poesía, ley, sabiduría, profecía, evangelio y apocalíptica. Cada forma literaria comunica la verdad divina adaptada a la cultura y contexto del pueblo de Dios.' },
-          { titulo: '5. Contexto del AT', contenido: 'El Antiguo Testamento se desarrolló en un ambiente de influencias culturales como Egipto, Canaán y Babilonia. Sin embargo, Israel interpretó su historia a la luz de la fe en Yahveh, como el Dios que libera, establece alianzas y revela su justicia a través de la ley y los profetas.' },
-          { titulo: '6. Contexto del NT', contenido: 'Jesús nace bajo el dominio romano en una Palestina marcada por tensiones religiosas, sociales y culturales. El mundo helenístico influyó en la transmisión del evangelio. El NT refleja esta diversidad al proclamar a Cristo como cumplimiento de las promesas y salvador universal.' },
-          { titulo: '7. La alianza como eje bíblico', contenido: 'Desde la alianza con Noé hasta la nueva alianza en Cristo, la relación entre Dios e Israel se expresa como pacto. Es un vínculo que une fidelidad, elección y promesa. Jesús instituye la alianza eterna en su sangre, centro de la fe cristiana.' }
-        ];
+  {
+    titulo: '1. ¿Qué es la Biblia?',
+    contenido: 'La Biblia es la Palabra de Dios consignada por escrito bajo la inspiración del Espíritu Santo (cf. Dei Verbum 9). Es una colección de libros que, aunque diversos en género, época y autor, constituyen una unidad orgánica centrada en el designio salvífico de Dios. En ella, Dios se comunica de forma humana para que el hombre entienda la verdad divina. Jesucristo, Palabra hecha carne, es la plenitud de esta revelación (cf. DV 4). La Escritura, leída en la Iglesia y a la luz del Espíritu, guía la fe, la vida y la misión del creyente como alimento espiritual indispensable (cf. DV 21).'
+  },
+  {
+    titulo: '2. Inspiración y Revelación',
+    contenido: 'La revelación divina es el acto libre por el cual Dios se manifiesta al ser humano para invitarlo a la comunión con Él (cf. Dei Verbum 2). Esta revelación culmina en Jesucristo, mediador y plenitud de toda revelación. La inspiración, por su parte, es la acción del Espíritu Santo que asiste a los autores sagrados para consignar fielmente lo que Dios quiso comunicar (cf. DV 11). Así, la Escritura es palabra humana y divina a la vez. Esta cooperación misteriosa garantiza la verdad salvífica del texto, permitiendo que hable a todos los tiempos sin perder su raíz histórica y cultural.'
+  },
+  {
+    titulo: '3. El canon de la Biblia',
+    contenido: 'El canon bíblico es el conjunto de libros que la Iglesia reconoce como inspirados por el Espíritu Santo y normativos para la fe (cf. Dei Verbum 8-10). Este discernimiento se desarrolló en el contexto de la tradición viva de la Iglesia y fue confirmado por la autoridad eclesial. El canon católico incluye 46 libros del Antiguo Testamento y 27 del Nuevo. Su definición refleja la conciencia de que la Escritura no es independiente de la Iglesia, sino parte de la única Tradición que custodia la revelación. Por eso, la Biblia debe leerse con el mismo Espíritu en que fue escrita (cf. DV 12).'
+  },
+  {
+    titulo: '4. Tipos, géneros y formas literarias',
+    contenido: 'La Biblia contiene una pluralidad de géneros: narraciones históricas, leyes, profecías, poesía sapiencial, evangelios, cartas, apocalipsis, etc. Cada forma literaria responde a un contexto cultural y transmite una verdad teológica según su propio lenguaje simbólico. Leer la Escritura correctamente exige identificar el género, el contexto, la intención del autor sagrado y el mensaje central. Por ejemplo, un salmo no se interpreta como una crónica, ni una parábola como historia literal. La exégesis respeta esta diversidad como riqueza y como clave para acceder al mensaje revelado de forma fiel y profunda.'
+  },
+  {
+    titulo: '5. Contexto del Antiguo Testamento',
+    contenido: 'El Antiguo Testamento surge en diálogo con culturas del antiguo Cercano Oriente: Egipto, Mesopotamia, Canaán. Comparte formas literarias y cosmovisiones, pero transforma profundamente sus contenidos desde la experiencia de un Dios único, justo y liberador. Las leyes, relatos y profecías de Israel nacen en contextos de éxodo, alianza, monarquía y exilio. La historia de Israel se interpreta a la luz de la fidelidad de Yahveh, que guía, corrige y salva a su pueblo. El AT no es solo historia, sino memoria creyente, marcada por una experiencia viva de Dios en medio del pueblo.'
+  },
+  {
+    titulo: '6. Contexto del Nuevo Testamento',
+    contenido: 'El Nuevo Testamento se escribe en un mundo helenizado y bajo dominio romano. Palestina es cruce de religiones, culturas y tensiones sociales. Jesús predica en un ambiente marcado por la esperanza mesiánica, la opresión imperial y la diversidad religiosa. Los evangelios, escritos en griego, recogen la tradición oral y la interpretan desde la fe pascual. Pablo y otros escritores dialogan con el pensamiento grecorromano, sin renunciar a las raíces judías. Así, el NT expresa el anuncio del Reino en categorías culturales plurales, mostrando que el Evangelio es para todos los pueblos, sin perder su identidad salvífica.'
+  },
+  {
+    titulo: '7. La alianza como eje bíblico',
+    contenido: 'La alianza es el hilo conductor de toda la Biblia. Desde Noé y Abraham hasta Moisés y David, Dios establece pactos que expresan su fidelidad gratuita y la vocación del pueblo a la obediencia y comunión. Estos pactos son signos históricos de la iniciativa divina. En Jesús, se cumple y supera toda alianza anterior: Él es el mediador de la nueva y eterna alianza, sellada en su sangre. Esta alianza no es ya externa o legal, sino interior y transformadora, inscrita en el corazón por el Espíritu. Así, la fe cristiana se comprende como alianza de amor irrevocable.'
+  }
+];
+
         temas.forEach((tema, i) => {
           const id = i + 1;
           menu.innerHTML += `
