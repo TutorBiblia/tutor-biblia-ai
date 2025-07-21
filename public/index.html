@@ -136,13 +136,13 @@
     }
 
     function mostrarConsejo() {
-      const consejo = consejos[consejoIndex];
-      globo.textContent = consejo;
-      globo.style.display = "block";
-      const leido = consejo.replace(/\(([^,]+),\s?(\d+)\)/g, (_, libro, vers) => `${libro} capítulo ${vers} versículo ${vers}`);
-      hablarConCallback(leido, () => globo.style.display = "none");
-      consejoIndex = (consejoIndex + 1) % consejos.length;
-    }
+  const consejo = consejos[consejoIndex];
+  globo.textContent = consejo;
+  globo.style.display = "block";
+  const leido = consejo.replace(/([^\(]+)\s(\d+),\s?(\d+)/g, (_, libro, cap, vers) => `${libro} capítulo ${cap} versículo ${vers}`);
+  hablarConCallback(leido, () => globo.style.display = "none");
+  consejoIndex = (consejoIndex + 1) % consejos.length;
+}
 
     function toggleMenu() {
       const menu = document.getElementById("menu-biblia");
