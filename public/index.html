@@ -179,8 +179,8 @@ function toggleMenu() {
 function mostrarSubtema(index) {
   const respuesta = document.getElementById("respuesta");
   const imgExplica = document.getElementById("tito-explica");
-  respuesta.textContent = subtemasBiblicos[index];
-  hablar(subtemasBiblicos[index]);
+  respuesta.textContent = subtemas[index];
+hablar(subtemas[index]);
   imgExplica.style.display = "block";
   setTimeout(() => { imgExplica.style.display = "none"; }, 10000);
 }
