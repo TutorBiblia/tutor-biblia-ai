@@ -67,6 +67,22 @@
         font-size: 1.05rem;
       }
     }
+    .botones-accion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.botones-accion button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
   </style>
 </head>
 
@@ -87,9 +103,11 @@
   <br><br>
 
   <!-- Botones -->
-  <button onclick="enviarMensaje()" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">Enviar pregunta</button>
-  <button onclick="reconocerVoz()" style="background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-left: 10px; cursor: pointer;">🎤 Dictar</button>
-  <button onclick="detenerVoz()" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-size: 1rem; margin-top: 10px; cursor: pointer;">🛑 Detener voz</button>
+<div class="botones-accion">
+  <button onclick="enviarMensaje()">Enviar pregunta</button>
+  <button onclick="reconocerVoz()">🎤 Dictar</button>
+  <button onclick="detenerVoz()">🛑 Detener voz</button>
+</div>
 
   <p id="cargando" style="display:none; font-style: italic; color: #888;">⏳ Tito está pensando...</p>
 
