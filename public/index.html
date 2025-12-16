@@ -28,9 +28,18 @@
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
 
-  <!-- Presentación de Tito -->
-  <div class="tito-presentacion">
-    .tito-presentacion {
+<!-- Presentación de Tito -->
+<div class="tito-presentacion">
+  <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
+       onclick="presentarseTito()" ondblclick="titoBromea()"
+       style="cursor: pointer; width: 120px; border-radius: 50%;">
+  
+  <p id="presentacion-texto">
+    Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
+  </p>
+</div>
+<style>
+.tito-presentacion {
   display: flex;
   align-items: center;
   background-color: #f5f8fa;
@@ -41,6 +50,20 @@
   gap: 16px;
 }
 
+#presentacion-texto {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* 📱 Móvil */
+@media (max-width: 600px) {
+  .tito-presentacion {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>
 #presentacion-texto {
   font-size: 1.2rem;
   font-weight: 500;
