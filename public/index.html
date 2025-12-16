@@ -31,13 +31,13 @@
 <!-- Presentación de Tito -->
 <div class="tito-presentacion">
   <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
-       onclick="presentarseTito()" ondblclick="titoBromea()"
-       style="cursor: pointer; width: 120px; border-radius: 50%;">
+       onclick="presentarseTito()" ondblclick="titoBromea()">
   
   <p id="presentacion-texto">
     Hola soy <strong>Tito</strong>, tu tutor virtual. Estoy para acompañarte en tu aprendizaje bíblico.
   </p>
 </div>
+
 <style>
 .tito-presentacion {
   display: flex;
@@ -49,6 +49,32 @@
   margin-bottom: 20px;
   gap: 16px;
 }
+
+#tito-img {
+  cursor: pointer;
+  width: 120px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+#presentacion-texto {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* 📱 Móvil */
+@media (max-width: 600px) {
+  .tito-presentacion {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #presentacion-texto {
+    font-size: 1.05rem;
+  }
+}
+</style>
 
 #presentacion-texto {
   font-size: 1.2rem;
