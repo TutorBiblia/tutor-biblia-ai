@@ -29,7 +29,36 @@
 <body style="font-family: Arial, sans-serif; max-width: 650px; margin: auto; padding: 2rem; background-color: #fef9f4; color: #2d3436;">
 
   <!-- Presentación de Tito -->
-  <div style="display: flex; align-items: center; background-color: #f5f8fa; border-radius: 12px; padding: 20px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
+  <div class="tito-presentacion">
+    .tito-presentacion {
+  display: flex;
+  align-items: center;
+  background-color: #f5f8fa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+#presentacion-texto {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* 📱 Ajuste móvil */
+@media (max-width: 600px) {
+  .tito-presentacion {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #presentacion-texto {
+    font-size: 1.05rem;
+  }
+}
+
     <img id="tito-img" src="Tito parado.jpg" alt="Tutor Tito"
       onclick="presentarseTito()" ondblclick="titoBromea()"
       style="cursor: pointer; width: 120px; border-radius: 50%; margin-right: 20px; transition: transform 0.3s ease;">
