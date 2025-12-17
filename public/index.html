@@ -15,14 +15,18 @@
   gap: 12px;
   background-color: #f5f8fa;
   border-radius: 9px;
-  padding: 9px;
-  margin-bottom: 9px;
+  padding: 8px;
+  margin-bottom: 12px;
+
+  max-height: 140px;   /* 🔑 controla el desborde */
+  overflow: hidden;    /* 🔑 evita que el texto se “escape” */
 }
+
 
 #tito-img {
   cursor: pointer;
-  width: 120px;
-  height: auto;
+  width: auto;
+  height: 120px;       /* 🔑 no más alto que el contenedor */
   border-radius: 50%;
   flex-shrink: 0;
   transition: transform 0.3s ease;
@@ -42,14 +46,21 @@
 @media (max-width: 500px) {
 
   .tito-presentacion {
-    gap: 10px;
+    max-height: 120px;
     padding: 6px;
-    max-height: 130px;
   }
 
   #tito-img {
-    width: 75px;
+    height: 95px;
   }
+
+  #presentacion-texto {
+    font-size: 0.85rem;
+    line-height: 1.25;
+  }
+
+}
+
 
   #presentacion-texto {
     font-size: 0.85rem;
