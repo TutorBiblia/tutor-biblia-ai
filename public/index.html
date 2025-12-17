@@ -8,27 +8,26 @@
   <style>
  /* ====== ESTILOS GENERALES ====== */
 
+/* ====== ESTILOS GENERALES ====== */
+
 .tito-presentacion {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
   background-color: #f5f8fa;
   border-radius: 9px;
   padding: 8px;
   margin-bottom: 12px;
-
-  max-height: 140px;   /* 🔑 controla el desborde */
-  overflow: hidden;    /* 🔑 evita que el texto se “escape” */
 }
-
 
 #tito-img {
   cursor: pointer;
-  width: auto;
-  height: 120px;       /* 🔑 no más alto que el contenedor */
+  max-width: 160px;
+  width: 100%;
+  height: auto;
   border-radius: 50%;
-  flex-shrink: 0;
+  display: block;
+  margin: 0 auto;
   transition: transform 0.3s ease;
 }
 
@@ -37,7 +36,8 @@
   font-weight: 500;
   line-height: 1.4;
   max-width: 280px;
-  margin: 0; /* CLAVE: evita descuadre */
+  margin: 6px 0 0 0;
+  text-align: center;
 }
 
 
@@ -46,12 +46,11 @@
 @media (max-width: 500px) {
 
   .tito-presentacion {
-    max-height: 120px;
     padding: 6px;
   }
 
   #tito-img {
-    height: 95px;
+    max-width: 120px;
   }
 
   #presentacion-texto {
@@ -60,6 +59,7 @@
   }
 
 }
+
 
 
   #presentacion-texto {
