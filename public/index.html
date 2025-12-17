@@ -6,41 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <style>
-  @media (max-width: 500px) {
+ /* ====== ESTILOS GENERALES ====== */
 
 .tito-presentacion {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  padding: 6px;
-  max-height: 130px;
-   }
-
-#tito-img {
-  width: 75px;
-  height: auto;
-}
-
-
-  #presentacion-texto {
-    font-size: 0.85rem;
-    line-height: 1.3;
-  }
-
-
-  #tito-img {
-    width: 80px;
-  }
-
-  #presentacion-texto {
-    font-size: 0.85rem;
-  }
-}
-
-.tito-presentacion {
-  display: flex;
-  flex-direction: row;   /* 👈 CLAVE */
   align-items: center;
   gap: 12px;
   background-color: #f5f8fa;
@@ -48,6 +18,48 @@
   padding: 9px;
   margin-bottom: 9px;
 }
+
+#tito-img {
+  cursor: pointer;
+  width: 120px;
+  height: auto;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+#presentacion-texto {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 280px;
+  margin: 0; /* CLAVE: evita descuadre */
+}
+
+
+/* ====== MÓVIL ====== */
+
+@media (max-width: 500px) {
+
+  .tito-presentacion {
+    gap: 10px;
+    padding: 6px;
+    max-height: 130px;
+  }
+
+  #tito-img {
+    width: 75px;
+  }
+
+  #presentacion-texto {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    max-width: none;
+    text-align: left;
+  }
+
+}
+
 
 
     #tito-img {
